@@ -13,35 +13,42 @@ session_start();
 
 class HomeController extends Controller
 {
+
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+    
     public $data = [];
+
     public function index(){
         return view('login');
     }
     
     // pages/home
     public function home(){
-        $id = Session::get('name');
-        if($id == null){
-            return Redirect::to('/');
-        }
-        else{
-            $sinhvien   = DB::table('sinhvien')->get();
-            $monhoc     = DB::table('monhoc')->get();
-            $lop        = DB::table('lop')->get();
-            $htdt       = DB::table('htdt')->get();
+        $this -> AuthLogin();
 
-            $countsinhvien  = count($sinhvien);
-            $countmonhoc    = count($monhoc);
-            $countlop       = count($lop);
-            $counthtdt      = count($htdt);
+        $sinhvien   = DB::table('sinhvien')->get();
+        $monhoc     = DB::table('monhoc')->get();
+        $lop        = DB::table('lop')->get();
+        $htdt       = DB::table('htdt')->get();
 
+        $countsinhvien  = count($sinhvien);
+        $countmonhoc    = count($monhoc);
+        $countlop       = count($lop);
+        $counthtdt      = count($htdt);
 
-            return view('pages.home', $this->data) 
-            -> with('sinhvien', $countsinhvien) 
-            -> with('monhoc', $countmonhoc)
-            -> with('lop', $countlop)
-            -> with('htdt', $counthtdt);
-        }
+        return view('pages.home', $this->data) 
+        -> with('sinhvien', $countsinhvien) 
+        -> with('monhoc', $countmonhoc)
+        -> with('lop', $countlop)
+        -> with('htdt', $counthtdt);
     }
 
     // xu ly dang nhap

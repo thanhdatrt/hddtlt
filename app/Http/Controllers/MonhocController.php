@@ -14,8 +14,19 @@ use MonhocModel;
 
 class MonhocController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function viewmonhoc(Request $request){
-        
+        $this -> AuthLogin();
+
         if(isset($_GET['keyword'])){
             $keyword = $_GET['keyword'];
             $listsearch = DB::table('monhoc') -> where('tenhp', 'LIKE', '%'.$keyword.'%') ->orWhere('mahp', 'LIKE', '%'.$keyword.'%') -> paginate(15);
@@ -30,12 +41,15 @@ class MonhocController extends Controller
     }
 
     public function addmonhoc(){
+        $this -> AuthLogin();
 
         return view('pages.monhoc.addmonhoc');
     }
 
     // action save mon hoc
     public function savemonhoc(Request $request){
+        $this -> AuthLogin();
+
         $data = array();
         $temp_mahp = $request -> mamonhoc;
         $data['mahp'] = $request -> mamonhoc;
@@ -74,17 +88,23 @@ class MonhocController extends Controller
 
     // show - hiden mon hoc
     public function hiden_monhoc($mahp){
+        $this -> AuthLogin();
+
         DB::table('monhoc') -> where('mahp', $mahp) -> update(['status'=> 0]);
         return redirect::to('viewmonhoc');
     }
 
     public function show_monhoc($mahp){
+        $this -> AuthLogin();
+
         DB::table('monhoc') -> where('mahp', $mahp) -> update(['status'=> 1]);
         return redirect::to('viewmonhoc');
     }
 
     // GET edit mon hoc
     public function editmonhoc($mahp){
+        $this -> AuthLogin();
+
         $listmonhoc = DB::table('monhoc') -> where('mahp', $mahp) -> get();
         $result_editmonhoc = view('pages.monhoc.editmonhoc') -> with('editmonhoc', $listmonhoc);
         return view('layout') -> with('pages.monhoc.editmonhoc', $result_editmonhoc);
@@ -92,6 +112,8 @@ class MonhocController extends Controller
     }
     // POST edit mon hoc
     public function action_editmonhoc(Request $request, $mahp){
+        $this -> AuthLogin();
+
         $data = array();
         $data['tenhp'] = $request -> tenmonhoc;
         $data['tinchi'] = $request -> tinchi;
@@ -123,12 +145,16 @@ class MonhocController extends Controller
 
     // delete mon hoc
     public function deletemonhoc($mahp){
+        $this -> AuthLogin();
+
         DB::table('monhoc') -> where('mahp', $mahp) -> delete();
         return redirect::to('viewmonhoc');
     }
 
     // import excel
     public function import_excel(Request $request){
+        $this -> AuthLogin();
+        
         Excel::import(new ExcelImport, $request -> file('filemonhoc') -> store('files'));
         return redirect() -> back();
     }

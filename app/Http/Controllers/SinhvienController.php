@@ -12,8 +12,19 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class SinhvienController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function viewsinhvien(Request $request){
-        
+        $this -> AuthLogin();
+
         if(isset($_GET['keyword'])){
             $keyword = $_GET['keyword'];
             $listsearch = DB::table('sinhvien') -> where('hoten', 'LIKE', '%'.$keyword.'%') ->orWhere('masv', 'LIKE', '%'.$keyword.'%') -> orWhere('malop', 'LIKE', '%'.$keyword.'%')-> paginate(2);
@@ -29,10 +40,14 @@ class SinhvienController extends Controller
     }
 
     public function addsinhvien(){
+        $this -> AuthLogin();
+
         return view('pages.sinhvien.addsinhvien');
     }
 
-    public static function loaddropdown(){
+    public function loaddropdown(){
+        $this -> AuthLogin();
+
         $listhe = DB::table('he') -> get();
         $listhtdt = DB::table('htdt') -> get();
         $listlop = DB::table('lop') -> get();
@@ -44,6 +59,8 @@ class SinhvienController extends Controller
     }
 
     public function savesinhvien(Request $request){
+        $this -> AuthLogin();
+
         $data = array();
         $temp_masv = $request -> masv;
         $data['masv'] = $request -> masv;
@@ -85,16 +102,22 @@ class SinhvienController extends Controller
 
     // show - hiden sinh vien
     public function hiden_sinhvien($masv){
+        $this -> AuthLogin();
+
         DB::table('sinhvien') -> where('masv', $masv) -> update(['status'=> 0]);
         return redirect::to('viewsinhvien');
     }
 
     public function show_sinhvien($masv){
+        $this -> AuthLogin();
+
         DB::table('sinhvien') -> where('masv', $masv) -> update(['status'=> 1]);
         return redirect::to('viewsinhvien');
     }
 
     public function editsinhvien($masv){
+        $this -> AuthLogin();
+
         $listsinhvien = DB::table('sinhvien') -> where('masv', $masv) -> get();
         $listhe = DB::table('he') -> get();
         $listhtdt = DB::table('htdt') -> get();
@@ -106,6 +129,8 @@ class SinhvienController extends Controller
     }
 
     public function action_editsinhvien(Request $request, $masv){
+        $this -> AuthLogin();
+
         $data = array();
         $data['masv'] = $request -> masv;
         $data['mahs'] = $request -> mahs;
@@ -140,11 +165,15 @@ class SinhvienController extends Controller
     }
 
     public function deletesinhvien($masv){
+        $this -> AuthLogin();
+
         DB::table('sinhvien') -> where('masv', $masv) -> delete();
         return redirect::to('viewsinhvien');
     }
     
     public function import_excel(Request $request){
+        $this -> AuthLogin();
+
         Excel::import(new ExcelImportSinhvien, $request -> file('filesinhvien') -> store('files'));
         return redirect() -> back();
     }

@@ -12,18 +12,34 @@ use App\Http\Controllers\timestamp;
 
 class HeController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function viewhe(){
+        $this -> AuthLogin();
+
         $listhe = DB::table('he') -> get();
         $result_listhe = view('pages.he.viewhe') -> with('viewhe', $listhe);
         return view('layout') -> with('pages.he.viewhe', $result_listhe);
     }
 
     public function addhe(){
+        $this -> AuthLogin();
+
         return view('pages.he.addhe');
     }
 
     // action save mon hoc
     public function savehe(Request $request){
+        $this -> AuthLogin();
+
         $data = array();
         $temp_mahe = $request -> mahe;
         $data['mahe'] = $request -> mahe;
@@ -54,24 +70,25 @@ class HeController extends Controller
         }
     }
 
-    //search
-    public function search(){
-        
-    }
-
     // show - hiden mon hoc
     public function hiden_he($mahe){
+        $this -> AuthLogin();
+
         DB::table('he') -> where('mahe', $mahe) -> update(['status'=> 0]);
         return redirect::to('viewhe');
     }
 
     public function show_he($mahe){
+        $this -> AuthLogin();
+
         DB::table('he') -> where('mahe', $mahe) -> update(['status'=> 1]);
         return redirect::to('viewhe');
     }
 
     // GET edit mon hoc
     public function edithe($mahe){
+        $this -> AuthLogin();
+
         $listhe = DB::table('he') -> where('mahe', $mahe) -> get();
         $result_edithe = view('pages.he.edithe') -> with('edithe', $listhe);
         return view('layout') -> with('pages.he.edithe', $result_edithe);
@@ -80,6 +97,8 @@ class HeController extends Controller
     }
     // POST edit mon hoc
     public function action_edithe(Request $request, $mahe){
+        $this -> AuthLogin();
+
         $data = array();
         $data['he'] = $request -> tenhe;
 
@@ -105,6 +124,8 @@ class HeController extends Controller
 
     // delete mon hoc
     public function deletehe($mahe){
+        $this -> AuthLogin();
+        
         DB::table('he') -> where('mahe', $mahe) -> delete();
         return redirect::to('viewhe');
     }

@@ -10,13 +10,27 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function profile(Request $request){
+        $this -> AuthLogin();
+
         $userid = $request->session()->get('id');
         $user = DB::table('user') ->where('id', $userid) -> get();
         return view('pages.user.profile', compact('user'));
     }
 
     public function capnhattt(Request $request){
+        $this -> AuthLogin();
+
         $userid     = $request->session()->get('id');
         $name       = $request -> hoten;
         $phone      = $request -> phone;
@@ -39,6 +53,8 @@ class UserController extends Controller
     }
 
     public function doimatkhau(Request $request){
+        $this -> AuthLogin();
+
         $userid     = $request->session()->get('id');
         $mkcu   = $request -> mkcu;
         $mkmoi  = $request -> mkmoi;
@@ -71,12 +87,16 @@ class UserController extends Controller
     }
 
     public function AccountManager(Request $request) {
+        $this -> AuthLogin();
+
         $users = DB::table('user') -> paginate(15);
         $users -> appends($request -> all());
         return view("pages.user.AccountManagerment") -> with('users', $users);
     }
 
     public function hidden_user(Request $request, $id){
+        $this -> AuthLogin();
+
         $userid = $request->session()->get('id');
         if($id == $userid){
             Session::put('message', 'Bạn đang đăng nhập bẳng tài khoản này, không thể thu hồi quyền được!!!');
@@ -87,11 +107,15 @@ class UserController extends Controller
     }
 
     public function show_user(Request $request, $id){
+        $this -> AuthLogin();
+
         DB::table('user') -> where('id', $id) -> update(['status'=> 1]);
         return back();
     }
 
     public function deleteuser(Request $request, $id){
+        $this -> AuthLogin();
+
         $userid = $request->session()->get('id');
         if($id == $userid){
             Session::put('message', 'Tài khoản đang đăng nhập không thể xóa!!!');
@@ -102,6 +126,8 @@ class UserController extends Controller
     }
 
     public function addUser(Request $request){
+        $this -> AuthLogin();
+        
         $email      = $request -> email;
         $password   = md5($request -> password);
         $name       = $request -> name;

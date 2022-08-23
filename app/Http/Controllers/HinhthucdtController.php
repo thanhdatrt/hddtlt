@@ -10,18 +10,34 @@ use Illuminate\Support\Facades\Redirect;
 
 class HinhthucdtController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function viewhtdt(){
+        $this -> AuthLogin();
+
         $listhtdt = DB::table('htdt') -> get();
         $result_listhtdt = view('pages.htdt.viewhtdt') -> with('viewhtdt', $listhtdt);
         return view('layout') -> with('pages.htdt.viewhtdt', $result_listhtdt);
     }
 
     public function addhtdt(){
+        $this -> AuthLogin();
+
         return view('pages.htdt.addhtdt');
     }
 
     // action save mon hoc
     public function savehtdt(Request $request){
+        $this -> AuthLogin();
+
         $data = array();
         $temp_mahtdt = $request -> mahtdt;
         $data['mahtdt'] = $request -> mahtdt;
@@ -52,24 +68,25 @@ class HinhthucdtController extends Controller
         }
     }
 
-    //search
-    public function search(){
-        
-    }
-
     // show - hiden mon hoc
     public function hiden_htdt($mahtdt){
+        $this -> AuthLogin();
+
         DB::table('htdt') -> where('mahtdt', $mahtdt) -> update(['status'=> 0]);
         return redirect::to('viewhtdt');
     }
 
     public function show_htdt($mahtdt){
+        $this -> AuthLogin();
+
         DB::table('htdt') -> where('mahtdt', $mahtdt) -> update(['status'=> 1]);
         return redirect::to('viewhtdt');
     }
 
     // GET edit mon hoc
     public function edithtdt($mahtdt){
+        $this -> AuthLogin();
+
         $listhtdt = DB::table('htdt') -> where('mahtdt', $mahtdt) -> get();
         $result_edithtdt = view('pages.htdt.edithtdt') -> with('edithtdt', $listhtdt);
         return view('layout') -> with('pages.htdt.edithtdt', $result_edithtdt);
@@ -78,6 +95,8 @@ class HinhthucdtController extends Controller
     }
     // POST edit mon hoc
     public function action_edithtdt(Request $request, $mahtdt){
+        $this -> AuthLogin();
+
         $data = array();
         $data['htdt'] = $request -> tenhtdt;
 
@@ -103,6 +122,8 @@ class HinhthucdtController extends Controller
 
     // delete mon hoc
     public function deletehtdt($mahtdt){
+        $this -> AuthLogin();
+        
         DB::table('htdt') -> where('mahtdt', $mahtdt) -> delete();
         return redirect::to('viewhtdt');
     }

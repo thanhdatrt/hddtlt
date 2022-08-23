@@ -14,6 +14,16 @@ use Maatwebsite\Excel\Excel;
 
 class XmgController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function dongbo(){
         $listhe = DB::table('he') -> get();
         $listnganh = DB::table('nganh') -> get();
@@ -413,7 +423,7 @@ class XmgController extends Controller
         for ($i=0; $i < count($checkbox); $i++) { 
             if($checkbox[$i] == 1){
                 unset($checkbox[$i - 1]);
-            }
+            } 
         }
         $mientru = array_values($checkbox);
 

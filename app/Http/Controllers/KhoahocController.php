@@ -12,18 +12,34 @@ use App\Http\Controllers\timestamp;
 
 class KhoahocController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function viewkhoahoc(){
+        $this -> AuthLogin();
+
         $listkhoahoc = DB::table('khoahoc') -> get();
         $result_listkhoahoc = view('pages.khoahoc.viewkhoahoc') -> with('viewkhoahoc', $listkhoahoc);
         return view('layout') -> with('pages.khoahoc.viewkhoahoc', $result_listkhoahoc);
     }
 
     public function addkhoahoc(){
+        $this -> AuthLogin();
+
         return view('pages.khoahoc.addkhoahoc');
     }
 
     // action save mon hoc
     public function savekhoahoc(Request $request){
+        $this -> AuthLogin();
+
         $data = array();
         $temp_makhoahoc = $request -> makhoa;
         $data['makhoa'] = $request -> makhoa;
@@ -54,24 +70,25 @@ class KhoahocController extends Controller
         }
     }
 
-    //search
-    public function search(){
-        
-    }
-
     // show - hiden mon hoc
     public function hiden_khoahoc($makhoahoc){
+        $this -> AuthLogin();
+
         DB::table('khoahoc') -> where('makhoa', $makhoahoc) -> update(['status'=> 0]);
         return redirect::to('viewkhoahoc');
     }
 
     public function show_khoahoc($makhoahoc){
+        $this -> AuthLogin();
+
         DB::table('khoahoc') -> where('makhoa', $makhoahoc) -> update(['status'=> 1]);
         return redirect::to('viewkhoahoc');
     }
 
     // GET edit mon hoc
     public function editkhoahoc($makhoahoc){
+        $this -> AuthLogin();
+
         $listkhoahoc = DB::table('khoahoc') -> where('makhoa', $makhoahoc) -> get();
         $result_editkhoahoc = view('pages.khoahoc.editkhoahoc') -> with('editkhoahoc', $listkhoahoc);
         return view('layout') -> with('pages.khoahoc.editkhoahoc', $result_editkhoahoc);
@@ -80,6 +97,8 @@ class KhoahocController extends Controller
     }
     // POST edit mon hoc
     public function action_editkhoahoc(Request $request, $makhoahoc){
+        $this -> AuthLogin();
+
         $data = array();
         $data['khoahoc'] = $request -> tenkhoahoc;
 
@@ -105,6 +124,8 @@ class KhoahocController extends Controller
 
     // delete mon hoc
     public function deletekhoahoc($makhoahoc){
+        $this -> AuthLogin();
+        
         DB::table('khoahoc') -> where('makhoa', $makhoahoc) -> delete();
         return redirect::to('viewkhoahoc');
     }

@@ -10,7 +10,19 @@ use Illuminate\Support\Facades\Redirect;
 
 class LopController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function viewlop(Request $request){
+        $this -> AuthLogin();
+
         if(isset($_GET['keyword'])){
             $keyword = $_GET['keyword'];
             $listsearch = DB::table('lop') -> where('tenlop', 'LIKE', '%'.$keyword.'%') ->orWhere('malop', 'LIKE', '%'.$keyword.'%') -> paginate(2);
@@ -26,11 +38,15 @@ class LopController extends Controller
     }
 
     public function addlop(){
+        $this -> AuthLogin();
+
         return view('pages.lop.addlop');
     }
 
     // action save mon hoc
     public function savelop(Request $request){
+        $this -> AuthLogin();
+
         $data = array();
         $temp_malop = $request -> malop;
         $data['malop'] = $request -> malop;
@@ -63,22 +79,28 @@ class LopController extends Controller
 
     //search
     public function search(){
-        
+        $this -> AuthLogin();
     }
 
     // show - hiden mon hoc
     public function hiden_lop($malop){
+        $this -> AuthLogin();
+
         DB::table('lop') -> where('malop', $malop) -> update(['status'=> 0]);
         return redirect::to('viewlop');
     }
 
     public function show_lop($malop){
+        $this -> AuthLogin();
+
         DB::table('lop') -> where('malop', $malop) -> update(['status'=> 1]);
         return redirect::to('viewlop');
     }
 
     // GET edit mon hoc
     public function editlop($malop){
+        $this -> AuthLogin();
+
         $listlop = DB::table('lop') -> where('malop', $malop) -> get();
         $result_editlop = view('pages.lop.editlop') -> with('editlop', $listlop);
         return view('layout') -> with('pages.lop.editlop', $result_editlop);
@@ -87,6 +109,8 @@ class LopController extends Controller
     }
     // POST edit mon hoc
     public function action_editlop(Request $request, $malop){
+        $this -> AuthLogin();
+
         $data = array();
 
         $data['tenlop'] = $request -> tenlop;
@@ -112,6 +136,8 @@ class LopController extends Controller
 
     // delete mon hoc
     public function deletelop($malop){
+        $this -> AuthLogin();
+        
         DB::table('lop') -> where('malop', $malop) -> delete();
         return redirect::to('viewlop');
     }

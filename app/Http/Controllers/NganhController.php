@@ -10,18 +10,34 @@ use Illuminate\Support\Facades\Redirect;
 
 class NganhController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function viewnganh(){
+        $this -> AuthLogin();
+
         $listnganh = DB::table('nganh') -> get();
         $result_listnganh = view('pages.nganh.viewnganh') -> with('viewnganh', $listnganh);
         return view('layout') -> with('pages.nganh.viewnganh', $result_listnganh);
     }
 
     public function addnganh(){
+        $this -> AuthLogin();
+
         return view('pages.nganh.addnganh');
     }
 
     // action save mon hoc
     public function savenganh(Request $request){
+        $this -> AuthLogin();
+
         $data = array();
         $temp_manganh = $request -> manganh;
         $data['manganh'] = $request -> manganh;
@@ -59,17 +75,23 @@ class NganhController extends Controller
 
     // show - hiden mon hoc
     public function hiden_nganh($manganh){
+        $this -> AuthLogin();
+
         DB::table('nganh') -> where('manganh', $manganh) -> update(['status'=> 0]);
         return redirect::to('viewnganh');
     }
 
     public function show_nganh($manganh){
+        $this -> AuthLogin();
+
         DB::table('nganh') -> where('manganh', $manganh) -> update(['status'=> 1]);
         return redirect::to('viewnganh');
     }
 
     // GET edit mon hoc
     public function editnganh($manganh){
+        $this -> AuthLogin();
+
         $listnganh = DB::table('nganh') -> where('manganh', $manganh) -> get();
         $result_editnganh = view('pages.nganh.editnganh') -> with('editnganh', $listnganh);
         return view('layout') -> with('pages.nganh.editnganh', $result_editnganh);
@@ -78,6 +100,8 @@ class NganhController extends Controller
     }
     // POST edit mon hoc
     public function action_editnganh(Request $request, $manganh){
+        $this -> AuthLogin();
+
         $data = array();
         $data['nganh'] = $request -> tennganh;
 
@@ -103,6 +127,8 @@ class NganhController extends Controller
 
     // delete mon hoc
     public function deletenganh($manganh){
+        $this -> AuthLogin();
+        
         DB::table('nganh') -> where('manganh', $manganh) -> delete();
         return redirect::to('viewnganh');
     }

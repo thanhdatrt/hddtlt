@@ -12,7 +12,18 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CtdtController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect::to('home');
+        }
+        else{
+            return Redirect::to('/') -> send();
+        }
+    }
+
     public function viewctdt(Request $request){
+        $this -> AuthLogin();
         
         if(isset($_GET['keyword'])){
             $keyword = $_GET['keyword'];
@@ -29,11 +40,14 @@ class CtdtController extends Controller
     }
 
     public function addctdt(){
+        $this -> AuthLogin();
 
         return view('pages.ctdt.addctdt');
     }
 
-    public static function loaddropdownctdt(){
+    public function loaddropdownctdt(){
+        $this -> AuthLogin();
+
         $listhe = DB::table('he') -> get();
         $listmonhoc = DB::table('monhoc') -> get();
         $listnganh = DB::table('nganh') -> get();
@@ -43,6 +57,7 @@ class CtdtController extends Controller
 
     // action save mon hoc
     public function savectdt(Request $request){
+        $this -> AuthLogin();
         $data = array();
         $temp_mahp = $request -> mahp;
         $data['mahp'] = $request -> mahp;
@@ -82,17 +97,20 @@ class CtdtController extends Controller
 
     // show - hiden mon hoc
     public function hiden_ctdt($mahp){
+        $this -> AuthLogin();
         DB::table('ctdt') -> where('mahp', $mahp) -> update(['status'=> 0]);
         return redirect::to('viewctdt');
     }
 
     public function show_ctdt($mahp){
+        $this -> AuthLogin();
         DB::table('ctdt') -> where('mahp', $mahp) -> update(['status'=> 1]);
         return redirect::to('viewctdt');
     }
 
     // GET edit mon hoc
     public function editctdt($mahp){
+        $this -> AuthLogin();
         $listctdt = DB::table('ctdt') -> where('mahp', $mahp) -> get();
         $listhe = DB::table('he') -> get();
         $listmonhoc = DB::table('monhoc') -> get();
@@ -102,6 +120,7 @@ class CtdtController extends Controller
     }
     // POST edit mon hoc
     public function action_editctdt(Request $request, $mahp){
+        $this -> AuthLogin();
         $data = array();
         $data['mahp'] = $request -> mahp;
         $data['manganh'] = $request -> manganh;
@@ -132,12 +151,14 @@ class CtdtController extends Controller
 
     // delete mon hoc
     public function deletectdt($mahp){
+        $this -> AuthLogin();
         DB::table('ctdt') -> where('mahp', $mahp) -> delete();
         return redirect::to('viewctdt');
     }
 
     // import excel
     public function import_excel(Request $request){
+        $this -> AuthLogin();
         Excel::import(new ExcelImportCtdt, $request -> file('filectdt') -> store('files'));
         return redirect() -> back();
     }

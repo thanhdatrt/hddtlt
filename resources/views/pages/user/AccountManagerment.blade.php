@@ -81,6 +81,7 @@
                         <th class="datatable-nosort">Email</th>
                         <th class="datatable-nosort">Tên</th>
                         <th class="datatable-nosort">Số điện thoại</th>
+                        <th class="datatable-nosort">Mật khẩu</th>
                         <th class="datatable-nosort">Create_at</th>
                         <th class="datatable-nosort">Update_at</th>
                         <th class="datatable-nosort">Quyền</th>
@@ -95,6 +96,9 @@
                             <td>{{$item -> email}}</td>
                             <td>{{$item -> name}}</td>
                             <td>{{$item -> phone}}</td>
+                            <td>
+                                {{$item -> password}}
+                            </td>
                             <td>{{$item -> created_at}}</td>
                             <td>{{$item -> updated_at}}</td>
                             <td>
@@ -155,6 +159,28 @@
                     form.submit();
                 }
             });
+        });
+
+        const toggleButton = document.querySelector('#toggle-password-button');
+        const passwordField = document.querySelector('#password');
+        const closedEye = document.querySelector('#closed-eye');
+        const openEye = document.querySelector('#open-eye');
+        let isPasswordHidden = true;
+        toggleButton.addEventListener('click', function() {
+        if (isPasswordHidden) {
+        passwordField.type = 'text';
+        openEye.classList.remove('hide');
+        openEye.classList.add('show');
+        closedEye.classList.add('hide');
+        closedEye.classList.remove('show');
+        } else {
+        passwordField.type = 'password';
+        closedEye.classList.remove('hide');
+        closedEye.classList.add('show');
+        openEye.classList.add('hide');
+        openEye.classList.remove('show');
+        }
+        isPasswordHidden = !isPasswordHidden;
         });
     </script>
 
