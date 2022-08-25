@@ -17,11 +17,10 @@
             </div>
         </div>
     </div>
-
     
     <div class="card-box mb-30">
         <div class="p-20">
-            <h4 class="text-blue h4">THÊM TÀI KHOẢN</h4>
+            <h4 style="margin-left: 10px; padding-top: 10px" class="text-blue h4">THÊM TÀI KHOẢN</h4>
         </div>
         <?php
             $adduser = Session::get('adduser');
@@ -33,7 +32,7 @@
         <div class="p-20">
             <form action="{{URL::to('/adduser')}}" method="post">
                 @csrf
-                <div class="row">
+                <div style="margin-left: 10px" class="row">
                     <div class="col">
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email</label>
@@ -54,7 +53,7 @@
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary mb-2">Thêm</button>
+                            <button style="margin-top:38px" type="submit" class="btn btn-primary mb-2">Thêm</button>
                         </div>
                     </div>
                 </div>
@@ -62,7 +61,7 @@
         </div>
 
         <div class="p-20">
-            <h4 class="text-blue h4">DANH SÁCH TÀI KHOẢN</h4>
+            <h4 style="margin-left: 10px" class="text-blue h4">DANH SÁCH TÀI KHOẢN</h4>
         </div>
         <?php
             $message = Session::get('message');
@@ -81,7 +80,7 @@
                         <th class="datatable-nosort">Email</th>
                         <th class="datatable-nosort">Tên</th>
                         <th class="datatable-nosort">Số điện thoại</th>
-                        <th class="datatable-nosort">Mật khẩu</th>
+                        {{-- <th class="datatable-nosort">Mật khẩu</th> --}}
                         <th class="datatable-nosort">Create_at</th>
                         <th class="datatable-nosort">Update_at</th>
                         <th class="datatable-nosort">Quyền</th>
@@ -96,9 +95,9 @@
                             <td>{{$item -> email}}</td>
                             <td>{{$item -> name}}</td>
                             <td>{{$item -> phone}}</td>
-                            <td>
+                            {{-- <td>
                                 {{$item -> password}}
-                            </td>
+                            </td> --}}
                             <td>{{$item -> created_at}}</td>
                             <td>{{$item -> updated_at}}</td>
                             <td>

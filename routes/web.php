@@ -43,8 +43,10 @@ Route::get('/filterdata', [xmgController::class, 'filterdata']);
 Route::post('/capnhat', [xmgController::class, 'capnhat']);
 
 Route::get('/inkhdt/{masv}/{manganh}/{mahtdt}', [xmgController::class, 'inkhdt']);
-Route::get('/inkhdt/{masv}/{manganh}/{mahtdt}', [xmgController::class, 'inkhdt']);
 Route::get('/ingtcd/{masv}/{manganh}/{mahtdt}/{mahe}/{makhoa}', [xmgController::class, 'ingtcd']);
+
+Route::get('/inkhdt-excel/{masv}/{manganh}/{mahtdt}', [xmgController::class, 'inkhdt_excel']);
+Route::get('/ingtcd-excel/{masv}/{manganh}/{mahtdt}/{mahe}/{makhoa}', [xmgController::class, 'ingtcd_excel']);
 
 Route::get('/savesinhvien-ctdt/{masv}/{manganh}/{mahe}/{khoactdt}', [xmgController::class, 'savesinhvien_ctdt']);
 Route::post('/save_miengiam/{mahp}/{masv}', [xmgController::class, 'save_miengiam']);

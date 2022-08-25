@@ -82,6 +82,7 @@ class SinhvienController extends Controller
         else{
             $data['status'] = 0;
         }
+        $data['role'] = 0;
         $data['create_at'] = new dateTime('now');
         
         $result = DB::table('sinhvien') -> where('masv', $temp_masv) -> first();
@@ -175,6 +176,7 @@ class SinhvienController extends Controller
         $this -> AuthLogin();
 
         Excel::import(new ExcelImportSinhvien, $request -> file('filesinhvien') -> store('files'));
+        
         return redirect() -> back();
     }
 }

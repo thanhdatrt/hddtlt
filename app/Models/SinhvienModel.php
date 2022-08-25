@@ -21,6 +21,7 @@ class SinhvienModel extends Model
         'manganh', 
         'ghichu', 
         'status',
+        'role',
         'create_at'
     ];
     protected $primaryKey = 'masv';

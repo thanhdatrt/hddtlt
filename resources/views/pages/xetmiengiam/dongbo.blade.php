@@ -31,7 +31,7 @@
             <form action="{{URL::to('/dongbo')}}" method="GET">
                 {{ csrf_field() }}
                 <div class="row">
-                    <div class="col">
+                    <div class="col-5">
                         <div class="form-group">
                             <label class="col-sm-6 col-md-12 col-form-label">Mã hệ</label>
                             <div class="col-sm-6 col-md-12">
@@ -39,7 +39,15 @@
                                     <option selected disabled>------Select------</option>
                                     @if (isset($listhe))    
                                     @foreach ($listhe as $key => $he)
+                                    @if (isset($mahe))
+                                        @if ($he -> mahe == $mahe)
+                                            <option selected value="{{$he -> mahe}}">{{$he -> mahe}} - {{$he -> he}}</option>
+                                        @else
+                                            <option value="{{$he -> mahe}}">{{$he -> mahe}} - {{$he -> he}}</option>
+                                        @endif
+                                    @else
                                         <option value="{{$he -> mahe}}">{{$he -> mahe}} - {{$he -> he}}</option>
+                                    @endif
                                     @endforeach
                                     @endif
                                 </select>
@@ -52,14 +60,22 @@
                                     <option selected disabled>------Select------</option>
                                     @if (isset($listkhoa))    
                                     @foreach ($listkhoa as $key => $khoa)
+                                    @if (isset($mahe))
+                                        @if ($khoa -> makhoa == $makhoa)
+                                            <option selected value="{{$khoa -> makhoa}}">{{$khoa -> makhoa}} - {{$khoa -> tenkhoa}}</option>
+                                        @else
+                                            <option value="{{$khoa -> makhoa}}">{{$khoa -> makhoa}} - {{$khoa -> tenkhoa}}</option>
+                                        @endif
+                                    @else
                                         <option value="{{$khoa -> makhoa}}">{{$khoa -> makhoa}} - {{$khoa -> tenkhoa}}</option>
+                                    @endif
                                     @endforeach
                                     @endif
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-5">
                         <div class="form-group">
                             <label class="col-sm-6 col-md-12 col-form-label">Mã ngành</label>
                             <div class="col-sm-6 col-md-12">
@@ -67,7 +83,15 @@
                                     <option selected disabled>------Select------</option>
                                     @if (isset($listnganh))    
                                     @foreach ($listnganh as $key => $nganh)
+                                    @if (isset($mahe))
+                                        @if ($nganh -> manganh == $manganh)
+                                            <option selected value="{{$nganh -> manganh}}">{{$nganh -> manganh}} - {{$nganh -> tennganh}}</option>
+                                        @else
+                                            <option value="{{$nganh -> manganh}}">{{$nganh -> manganh}} - {{$nganh -> tennganh}}</option>
+                                        @endif
+                                    @else
                                         <option value="{{$nganh -> manganh}}">{{$nganh -> manganh}} - {{$nganh -> tennganh}}</option>
+                                    @endif
                                     @endforeach
                                     @endif
                                 </select>
@@ -80,16 +104,26 @@
                                     <option selected disabled>------Select------</option>
                                     @if (isset($listkhoactdt))
                                     @foreach ($listkhoactdt as $key => $ctdt)
+                                    @if (isset($mahe))
+                                        @if ($ctdt == $khoactdt)
+                                            <option selected value="{{$ctdt}}">{{$ctdt}}</option>
+                                        @else
+                                            <option value="{{$ctdt}}">{{$ctdt}}</option>
+                                        @endif
+                                    @else
                                         <option value="{{$ctdt}}">{{$ctdt}}</option>
+                                    @endif
                                     @endforeach
                                     @endif
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col align-self-center">
+                    <div class="col-2 align-self-center">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-filter"></i> Lọc</button>
+                            <button type="submit" style="margin-top:40px" class="btn btn-primary mb-2"><i class="fa-solid fa-filter"></i>
+                                Lọc
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -111,35 +145,39 @@
                 <table class="tablemonhoc data-table table stripe hover warp">
                     <thead>
                         <tr>
-                            <th>masv</th>
-                            <th class="datatable-nosort">mahs</th>
-                            <th class="datatable-nosort">hoten</th>
-                            <th class="datatable-nosort">ngaysinh</th>
-                            <th class="datatable-nosort">mahe</th>
-                            <th class="datatable-nosort">mahtdt</th>
-                            <th class="datatable-nosort">malop</th>
-                            <th class="datatable-nosort">makhoa</th>
-                            <th class="datatable-nosort">manganh</th>
+                            <th>Masv</th>
+                            <th class="datatable-nosort">Mahs</th>
+                            <th class="datatable-nosort">Họ tên</th>
+                            <th class="datatable-nosort">Ngày sinh</th>
+                            <th class="datatable-nosort">Mã hệ</th>
+                            <th class="datatable-nosort">Mã htdt</th>
+                            <th class="datatable-nosort">Mã lớp</th>
+                            <th class="datatable-nosort">Mã khóa</th>
+                            <th class="datatable-nosort">Mã Ngành</th>
                             <th class="datatable-nosort">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($sinhvien as $item)
-                        <tr>   
-                            <td>{{$item -> masv}}</td>
-                            <td>{{$item -> mahs}}</td>
-                            <td>{{$item -> hoten}}</td>
-                            <td>{{$item -> ngaysinh}}</td>
-                            <td>{{$item -> mahe}}</td>
-                            <td>{{$item -> mahtdt}}</td>
-                            <td>{{$item -> malop}}</td>
-                            <td>{{$item -> makhoa}}</td>
-                            <td>{{$item -> manganh}}</td>
-                            <td>
-                                <a class="btn btn-info justify-content-center" href="{{URL::to('/savesinhvien-ctdt/'.$item -> masv.'/'.$item -> manganh.'/'.$item -> mahe.'/'.$item -> khoactdt)}}"><i class="fa-solid fa-bookmark"></i> Đồng bộ</a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        @if (count($sinhvien) > 0)    
+                            @foreach ($sinhvien as $item)
+                            <tr>   
+                                <td>{{$item -> masv}}</td>
+                                <td>{{$item -> mahs}}</td>
+                                <td>{{$item -> hoten}}</td>
+                                <td>{{$item -> ngaysinh}}</td>
+                                <td>{{$item -> mahe}}</td>
+                                <td>{{$item -> mahtdt}}</td>
+                                <td>{{$item -> malop}}</td>
+                                <td>{{$item -> makhoa}}</td>
+                                <td>{{$item -> manganh}}</td>
+                                <td>
+                                    <a class="btn btn-info justify-content-center" href="{{URL::to('/savesinhvien-ctdt/'.$item -> masv.'/'.$item -> manganh.'/'.$item -> mahe.'/'.$item -> khoactdt)}}"><i class="fa-solid fa-bookmark"></i> Đồng bộ</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @else
+                            <td class="text-center" colspan="10">không có dữ liệu</td>
+                        @endif
                     </tbody>
                 </table>
             @else
@@ -156,12 +194,12 @@
                     <thead>
                         <tr>
                             <th>stt</th>
-                            <th class="datatable-nosort">mã ngành</th>
-                            <th class="datatable-nosort">mã hệ</th>
-                            <th class="datatable-nosort">khóa ctdt</th>
-                            <th class="datatable-nosort">mã hp</th>
-                            <th class="datatable-nosort">tự chọn</th>
-                            <th class="datatable-nosort">số tín chỉ tc</th>
+                            <th class="datatable-nosort">Mã ngành</th>
+                            <th class="datatable-nosort">Mã hệ</th>
+                            <th class="datatable-nosort">Mhóa ctdt</th>
+                            <th class="datatable-nosort">Mã hp</th>
+                            <th class="datatable-nosort">Tự chọn</th>
+                            <th class="datatable-nosort">Số tín chỉ tc</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -178,7 +216,7 @@
                             </tr>
                             @endforeach
                         @else
-                            <td class="text-center" colspan="7">khong co du lieu</td>
+                            <td class="text-center" colspan="7">không có dữ liệu</td>
                         @endif
                         
                     </tbody>

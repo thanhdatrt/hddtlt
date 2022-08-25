@@ -25,6 +25,8 @@ class XmgController extends Controller
     }
 
     public function dongbo(){
+        $this -> AuthLogin();
+
         $listhe = DB::table('he') -> get();
         $listnganh = DB::table('nganh') -> get();
         $listkhoahoc = DB::table('khoahoc') -> get();
@@ -50,13 +52,16 @@ class XmgController extends Controller
                 $manganh = $_GET['manganh'];
                 $khoactdt = $_GET['khoactdt'];
 
-                $sinhvien = DB::table('sinhvien') -> where('makhoa', $makhoa) 
+                $sinhvien = DB::table('sinhvien') 
+                -> where('makhoa', $makhoa) 
                 -> where('mahe', $mahe) 
-                -> where('manganh', $manganh) -> where('khoactdt', $khoactdt) -> get();
+                -> where('manganh', $manganh) 
+                -> where('khoactdt', $khoactdt) -> get();
 
                 $ctdt = DB::table('ctdt') -> where('mahe', $mahe) 
                 -> where('manganh', $manganh) 
-                -> where('khoactdt', $khoactdt) -> orderBy('stt', 'desc') -> get();
+                -> where('khoactdt', $khoactdt) 
+                -> orderBy('stt', 'asc') -> get();
 
                 return view('pages.xetmiengiam.dongbo') 
                 -> with('chuongtrinhdt', $ctdt) 
@@ -64,7 +69,11 @@ class XmgController extends Controller
                 -> with('listhe', $listhe) 
                 -> with('listnganh', $listnganh) 
                 -> with('listkhoa', $listkhoahoc) 
-                -> with('listkhoactdt', $listkhoactdt);
+                -> with('listkhoactdt', $listkhoactdt)
+                -> with('makhoa', $makhoa)
+                -> with('mahe', $mahe)
+                -> with('manganh', $manganh)
+                -> with('khoactdt', $khoactdt);
             } else{
                 Session::put('message', 'phải chọn tất cả các trường!!!');
                 return back();
@@ -79,6 +88,8 @@ class XmgController extends Controller
     }
 
     public function savesinhvien_ctdt($masv, $manganh, $mahe, $khoactdt){
+        $this -> AuthLogin();
+
         $data = array();
         
         $sinhvien = DB::table('sinhvien') -> where('masv', $masv) -> get();
@@ -125,6 +136,7 @@ class XmgController extends Controller
                 $data['mientru'] = 0;
                 $data['inkhdt'] = 0;
                 $data['status'] = 1;
+                $data['role'] = 0;
                 $data['create_at'] = new dateTime('now');
     
                 DB::table('sinhvien_ctdt') -> insert($data);
@@ -135,6 +147,8 @@ class XmgController extends Controller
     }
 
     public function xetmientruhp(){
+        $this -> AuthLogin();
+
         $sinhvien_ctdt = DB::table('sinhvien_ctdt') -> get();
 
         $listmasv = array();
@@ -206,6 +220,8 @@ class XmgController extends Controller
     }
 
     public function filterdata(){
+        $this -> AuthLogin();
+
         $sinhvien_ctdt = DB::table('sinhvien_ctdt') -> get();
 
         $listmasv = array();
@@ -312,6 +328,8 @@ class XmgController extends Controller
     }
 
     public function save_miengiam(Request $request, $mahp, $masv){
+        $this -> AuthLogin();
+
         $data = array();
         if(substr($request -> $mahp, 0, 7) == 'mientru'){
             $data['mientru'] = 1;
@@ -320,13 +338,16 @@ class XmgController extends Controller
             $data['mientru'] = 0;
             $data['inkhdt'] = 1;
         }
-        // $numbers = filter_var($request -> ghichu, FILTER_SANITIZE_NUMBER_INT);
+
         $data['ghichu'] = $request -> ghichu;
+
         DB::table('sinhvien_ctdt') -> where('mahp', $mahp) -> where('masv', $masv) -> update($data);
         return redirect() -> back();
     }
 
     public function inkhdt($masv, $manganh, $mahtdt){
+        $this -> AuthLogin();
+
         $sinhvien = DB::table('sinhvien') -> where('masv', $masv) -> get();
         $sv_ctdt = DB::table('sinhvien_ctdt') -> where('masv', $masv) -> get();
         $nganh = DB::table('nganh') -> where('manganh', $manganh) -> get();
@@ -350,16 +371,22 @@ class XmgController extends Controller
             $tongtinchith += $item -> tinchith;
         }
         
-        $pdf = PDF::loadView('pages.xetmiengiam.printkhdt', compact('sinhvien', 'sv_ctdt', 'tennganh', 'tenhtdt', 'tongtinchi', 'tongtinchilt', 'tongsotietlt', 'tongtinchith', 'tongsotietth',));
+        $pdf = PDF::loadView('pages.xetmiengiam.printkhdt', 
+        compact('sinhvien', 'sv_ctdt', 'tennganh',
+                'tenhtdt', 'tongtinchi', 'tongtinchilt', 
+                'tongsotietlt', 'tongtinchith', 'tongsotietth',));
 
         return $pdf -> download('khdt.pdf');
     }
 
-    public function inkhdt_excel(Request $request, $masv, $manganh, $mahtdt){
+    public function inkhdt_excel($masv, $manganh, $mahtdt){
+        $this -> AuthLogin();
+
         $sinhvien = DB::table('sinhvien') -> where('masv', $masv) -> get();
         $sv_ctdt = DB::table('sinhvien_ctdt') -> where('masv', $masv) -> get();
         $nganh = DB::table('nganh') -> where('manganh', $manganh) -> get();
         $htdt = DB::table('htdt') -> where('mahtdt', $mahtdt) -> get();
+
         foreach($nganh as $item){
             $tennganh = $item -> tennganh;
         }
@@ -372,17 +399,19 @@ class XmgController extends Controller
         $tongsotietth = 0;
         $tongtinchith = 0;
         foreach($sv_ctdt as $key => $item){
-            $tongtinchi += $item -> tinchi;
-            $tongtinchilt += $item -> tinchilt;
-            $tongsotietlt += $item -> sotietlt;
-            $tongsotietth += $item -> sotietth;
-            $tongtinchith += $item -> tinchith;
+            $tongtinchi     += $item -> tinchi;
+            $tongtinchilt   += $item -> tinchilt;
+            $tongsotietlt   += $item -> sotietlt;
+            $tongsotietth   += $item -> sotietth;
+            $tongtinchith   += $item -> tinchith;
         }
 
         
     }
 
     public function ingtcd($masv, $manganh, $mahtdt, $mahe, $makhoa){
+        $this -> AuthLogin();
+
         $ctdt_sinhvien = DB::table('sinhvien_ctdt') -> where('masv', $masv) -> get();
         $sinhvien = DB::table('sinhvien') -> where('masv', $masv) -> get();
         $nganh = DB::table('nganh') -> where('manganh', $manganh) -> get();
@@ -413,35 +442,60 @@ class XmgController extends Controller
     }
 
     public function capnhat(Request $request) {
+        $this -> AuthLogin();
+
         $checkbox       = $request -> status_checkbox;
         $mahp           = $request -> mahp;
         $tuchon         = $request -> tuchon;
         $tinchi         = $request -> tinchi;
-        $sotinchituchon = $request -> sotinchitc;
+        $sotinchitc     = $request -> sotinchitc;
         $masv           = $request -> masv;
+        
         // xoa phan tu thua trong mang
         for ($i=0; $i < count($checkbox); $i++) { 
             if($checkbox[$i] == 1){
                 unset($checkbox[$i - 1]);
             } 
         }
+        // get value of checkbox 
         $mientru = array_values($checkbox);
 
-        for ($i=0; $i < count($mahp); $i++) { 
-            if($mientru[$i] == 1){
-                $data = [
-                    'mientru'     => 1,
-                    'inkhdt'      => 0,
-                ];
-            } else {
-                $data = [
-                    'mientru'     => 0,
-                    'inkhdt'      => 1,
-                ];
-            }
-            DB::table('sinhvien_ctdt') -> where('masv', $masv) -> where('mahp', $mahp[$i]) -> update($data);
+        // $i = 1;
+        // foreach ($sinhvien_ctdt as $key => $value) {
+        //     if($listmasv == null){
+        //         $listmasv['masv'.$i] = $value -> masv;
+        //         $i++;
+        //     }
+        //     else if(in_array($value -> masv, $listmasv) == false) {
+        //         $listmasv['masv'.$i] = $value -> masv;
+        //         $i++;
+        //     }
+        // }
+
+        for($i=0; $i < count($tuchon); $i++) {
+
         }
 
+        for($i=0; $i < count($mahp); $i++) {
+            if($tuchon[$i] == null){
+                // cập nhật dũ giá trị môn không tự chọn
+                if($mientru[$i] == 1){
+                    $data = [
+                        'mientru'     => 1,
+                        'inkhdt'      => 0,
+                    ];
+                } else {
+                    $data = [
+                        'mientru'     => 0,
+                        'inkhdt'      => 1,
+                    ];
+                }
+                DB::table('sinhvien_ctdt') -> where('masv', $masv) -> where('mahp', $mahp[$i]) -> update($data);
+            } else {
+
+            }
+        }
+        
         return back();
     }
 }

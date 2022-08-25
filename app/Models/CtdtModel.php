@@ -11,4 +11,7 @@ class CtdtModel extends Model
     protected $fillable = [ 'mahp', 'manganh', 'mahe', 'khoactdt', 'stt', 'tuchon', 'sotinchitc', 'status', 'create_at'];
     protected $primaryKey = 'mahp';
     protected $table = 'ctdt';
+
+
+    
 }

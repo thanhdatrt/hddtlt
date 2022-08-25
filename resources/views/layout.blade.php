@@ -381,7 +381,7 @@
 
 			<!-- footer -->
 			<div class="footer-wrap pd-20 mb-20 card-box">
-				Đồ án chuyên ngành - Nguyễn Thành Đạt - 110119140
+				Quản lý xét miễn giảm học phần
 			</div>
 		</div>
 	</div>

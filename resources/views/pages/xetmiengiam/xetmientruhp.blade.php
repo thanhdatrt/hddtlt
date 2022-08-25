@@ -1,6 +1,23 @@
 @extends('layout')
 @section('content')
 
+    <style>
+        fieldset
+        {
+            max-width:280px;
+            /* padding:10px; */
+        }
+        legend {
+            padding-right: 32px;
+            color: gray;
+            font-size: 90%;
+            text-align: center;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
     <div class="page-header">
         <div class="row">
             <div class="col-md-12 col-sm-12">
@@ -142,7 +159,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-filter"></i> Lọc</button>
+                            <button style="margin-left: 80px; margin-top: 38px" type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-filter"></i> Lọc</button>
                         </div>
                     </div>
                 </div>
@@ -154,19 +171,29 @@
         <div class="pd-20">
             <form action="{{URL::to('/capnhat')}}" method="post" >
                 @csrf
-            @if (isset($sv_ctdt))
-            <div class="row">
-                <div class="col">
-                    <div class="pull-right">
-                        <a href="{{URL::to('/inkhdt/'.$masv.'/'.$manganh.'/'.$mahtdt)}}" class="btn btn-info"><i class="fa-solid fa-print"></i> In KHĐT</a>
-                        <a href="{{URL::to('/ingtcd/'.$masv.'/'.$manganh.'/'.$mahtdt.'/'.$mahe.'/'.$makhoa)}}" class="btn btn-info"><i class="fa-solid fa-print"></i> In GTCĐ</a>
-                        
-                        <button class="btn btn-primary" type="submit">Lưu</button>
+                @if (isset($sv_ctdt))
+                <div class="row">
+                    
+                    <div class="col-5">
+                        <fieldset>
+                            <legend class="legend1">PDF</legend>
+                            <a href="{{URL::to('/inkhdt/'.$masv.'/'.$manganh.'/'.$mahtdt)}}" class="btn btn-info"><i class="fa-solid fa-print"></i> In KHĐT</a>
+                            <a href="{{URL::to('/ingtcd/'.$masv.'/'.$manganh.'/'.$mahtdt.'/'.$mahe.'/'.$makhoa)}}" class="btn btn-info"><i class="fa-solid fa-print"></i> In GTCĐ</a>
+                        </fieldset>
                     </div>
+                    <div class="col-5">
+                        <fieldset>
+                            <legend class="legend1">EXCEL</legend>
+                            <a href="{{URL::to('/inkhdt-excel/'.$masv.'/'.$manganh.'/'.$mahtdt)}}" class="btn btn-info"><i class="fa-solid fa-print"></i> In KHĐT</a>
+                            <a href="{{URL::to('/ingtcd-excel/'.$masv.'/'.$manganh.'/'.$mahtdt.'/'.$mahe.'/'.$makhoa)}}" class="btn btn-info"><i class="fa-solid fa-print"></i> In GTCĐ</a>
+                        </fieldset>
+                    </div>
+                        
                 </div>
-            </div>
-            {{-- <form id="validate" action="{{URL::to('/capnhat')}}" method="POST" enctype="multipart/form-data"> --}}
-                <table class="tablemonhoc data-table table stripe hover warp">
+                    <div class="pull-right">
+                        <button style="margin-bottom: 10px" class="btn btn-primary" type="submit">Lưu</button>
+                    </div> 
+                <table style="margin-top: 20px" class="tablemonhoc data-table table stripe hover warp">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -205,13 +232,10 @@
                                     <td>{{$item -> sotietth}}</td>
                                     <td>{{$item -> ghichuhp}}</td>
                                     <td>
-                                        @if ($item -> tuchon == '')
-                                            <input name="tuchon[]" type="hidden" value="0">
-                                        @else
-                                            <input name="tuchon[]" type="hidden" value="{{$item -> tuchon}}">
-                                            {{$item -> tuchon}}
-                                        @endif
+                                        <input name="tuchon[]" type="hidden" value="{{$item -> tuchon}}">
+                                        {{$item -> tuchon}}
                                     </td>
+
                                     <td>
                                         <input name="sotinchitc[]" type="hidden" value="{{$item -> sotinchitc}}">
                                         {{$item -> sotinchitc}}
@@ -238,7 +262,6 @@
                                 
                     </tbody>
                 </table>
-            {{-- </form> --}}
             </form>
             {{-- {{ $sv_ctdt->appends(request()->all())->links(); }} --}}
             @else

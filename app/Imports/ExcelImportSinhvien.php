@@ -16,19 +16,20 @@ class ExcelImportSinhvien implements ToModel
     public function model(array $row)
     {
         return new SinhvienModel([
-            'masv' => $row[0],
-            'mahs' => $row[1],
-            'mahe' => $row[2],
-            'mahtdt' => $row[3],
-            'hoten' => $row[4],
-            'ngaysinh' => $row[5],
-            'malop' => $row[6],
-            'khoactdt' => $row[7],
-            'makhoa' => $row[8],
-            'manganh' => $row[9],
-            'ghichu' => "",
-            'status' => 1,
-            'created_at' => new DateTime('now'),
+            'masv'          => $row[0],
+            'mahs'          => $row[1],
+            'mahe'          => $row[2],
+            'mahtdt'        => $row[3],
+            'hoten'         => $row[4],
+            'ngaysinh'      => $row[5],
+            'malop'         => $row[6],
+            'khoactdt'      => $row[7],
+            'makhoa'        => $row[8],
+            'manganh'       => $row[9],
+            'ghichu'        => "",
+            'status'        => 1,
+            'role'          => 0,
+            'created_at'    => new DateTime('now'),
         ]);
     }
 }

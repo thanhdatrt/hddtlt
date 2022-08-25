@@ -11,4 +11,7 @@ class MonhocModel extends Model
     protected $fillable = ['mahp', 'tenhp', 'tinchi', 'tinchilt', 'sotietlt', 'tinchith', 'sotietth', 'ghichuhp', 'status','create_at'];
     protected $primaryKey = 'mahp';
     protected $table = 'monhoc';
+
+
+    
 }
