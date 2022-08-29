@@ -5,14 +5,29 @@ namespace App\Imports;
 use DateTime;
 use App\Models\SinhvienModel;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\WithLimit;
 
-class ExcelImportSinhvien implements ToModel
+class ExcelImportSinhvien implements ToModel, WithStartRow
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+    protected $startRow;
+    
+    public function __construct(int $startRow)
+    {
+        $this->startRow = $startRow;
+    }
+
+    public function startRow(): int
+    {
+        return $this->startRow;
+    }
+
     public function model(array $row)
     {
         return new SinhvienModel([
@@ -21,7 +36,7 @@ class ExcelImportSinhvien implements ToModel
             'mahe'          => $row[2],
             'mahtdt'        => $row[3],
             'hoten'         => $row[4],
-            'ngaysinh'      => $row[5],
+            'ngaysinh'      => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[5])->format('d/m/Y'),
             'malop'         => $row[6],
             'khoactdt'      => $row[7],
             'makhoa'        => $row[8],

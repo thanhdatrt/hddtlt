@@ -29,7 +29,7 @@
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-8">
-                            <input name="filesinhvien" type="file" class=" btn height-auto">
+                            <input name="filesinhvien" type="file" class="form-control btn height-auto">
                         </div>
                         <div class="col-md-4">
                             <button type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-plus"></i> import excel</button>
@@ -108,7 +108,7 @@
                     @endforeach
                     @else
                     <tr>
-                        <td colspan="10" class="text-center">không tìm thấy dữ liệu</td>
+                        <td colspan="11" class="text-center">không tìm thấy dữ liệu</td>
                     </tr>
                     
                     @endif

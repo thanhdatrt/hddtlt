@@ -14,6 +14,7 @@ use App\Http\Controllers\SinhvienController;
 use App\Http\Controllers\CtdtController;
 use App\Http\Controllers\XmgController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExportexcelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,11 +43,13 @@ Route::get('/filterdata', [xmgController::class, 'filterdata']);
 
 Route::post('/capnhat', [xmgController::class, 'capnhat']);
 
+// xuat file pdf
 Route::get('/inkhdt/{masv}/{manganh}/{mahtdt}', [xmgController::class, 'inkhdt']);
 Route::get('/ingtcd/{masv}/{manganh}/{mahtdt}/{mahe}/{makhoa}', [xmgController::class, 'ingtcd']);
 
-Route::get('/inkhdt-excel/{masv}/{manganh}/{mahtdt}', [xmgController::class, 'inkhdt_excel']);
-Route::get('/ingtcd-excel/{masv}/{manganh}/{mahtdt}/{mahe}/{makhoa}', [xmgController::class, 'ingtcd_excel']);
+// xuat file excel
+Route::get('/inkhdt-excel/{masv}/{manganh}/{mahtdt}', [exportexcelController::class, 'inkhdt_excel']);
+Route::get('/ingtcd-excel/{masv}/{manganh}/{mahtdt}/{mahe}/{makhoa}', [exportexcelController::class, 'ingtcd_excel']);
 
 Route::get('/savesinhvien-ctdt/{masv}/{manganh}/{mahe}/{khoactdt}', [xmgController::class, 'savesinhvien_ctdt']);
 Route::post('/save_miengiam/{mahp}/{masv}', [xmgController::class, 'save_miengiam']);

@@ -174,9 +174,7 @@ class SinhvienController extends Controller
     
     public function import_excel(Request $request){
         $this -> AuthLogin();
-
-        Excel::import(new ExcelImportSinhvien, $request -> file('filesinhvien') -> store('files'));
-        
+        Excel::import(new ExcelImportSinhvien(2), $request -> file('filesinhvien') -> store('files'));
         return redirect() -> back();
     }
 }
