@@ -159,7 +159,7 @@ class CtdtController extends Controller
     // import excel
     public function import_excel(Request $request){
         $this -> AuthLogin();
-        Excel::import(new ExcelImportCtdt, $request -> file('filectdt') -> store('files'));
+        Excel::import(new ExcelImportCtdt(2), $request -> file('filectdt') -> store('files'));
         return redirect() -> back();
     }
 }

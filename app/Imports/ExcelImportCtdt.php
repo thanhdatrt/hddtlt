@@ -5,14 +5,30 @@ namespace App\Imports;
 use DateTime;
 use App\Models\CtdtModel;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\WithLimit;
 
-class ExcelImportCtdt implements ToModel
+class ExcelImportCtdt implements ToModel, WithStartRow
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+
+    protected $startRow;
+    
+    public function __construct(int $startRow)
+    {
+        $this->startRow = $startRow;
+    }
+
+    public function startRow(): int
+    {
+        return $this->startRow;
+    }
+    
     public function model(array $row)
     {
         return new CtdtModel([

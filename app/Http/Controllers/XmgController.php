@@ -387,36 +387,6 @@ class XmgController extends Controller
         return $pdf -> download('khdt.pdf');
     }
 
-    public function inkhdt_excel($masv, $manganh, $mahtdt){
-        $this -> AuthLogin();
-
-        $sinhvien = DB::table('sinhvien') -> where('masv', $masv) -> get();
-        $sv_ctdt = DB::table('sinhvien_ctdt') -> where('masv', $masv) -> get();
-        $nganh = DB::table('nganh') -> where('manganh', $manganh) -> get();
-        $htdt = DB::table('htdt') -> where('mahtdt', $mahtdt) -> get();
-
-        foreach($nganh as $item){
-            $tennganh = $item -> tennganh;
-        }
-        foreach($htdt as $item){
-            $tenhtdt = $item -> tenhtdt;
-        }
-        $tongtinchi = 0;
-        $tongtinchilt = 0;
-        $tongsotietlt = 0;
-        $tongsotietth = 0;
-        $tongtinchith = 0;
-        foreach($sv_ctdt as $key => $item){
-            $tongtinchi     += $item -> tinchi;
-            $tongtinchilt   += $item -> tinchilt;
-            $tongsotietlt   += $item -> sotietlt;
-            $tongsotietth   += $item -> sotietth;
-            $tongtinchith   += $item -> tinchith;
-        }
-
-        
-    }
-
     public function ingtcd($masv, $manganh, $mahtdt, $mahe, $makhoa){
         $this -> AuthLogin();
 
