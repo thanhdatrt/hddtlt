@@ -22,7 +22,13 @@
     <div class="card-box mb-30">
         <div class="pd-20">
             <h4 class="text-blue h4">DANH SÁCH CHƯƠNG TRÌNH ĐÀO TẠO</h4>
-
+            <?php
+                $message = Session::get('message');
+                if($message) {
+                    echo '<div class="alert alert-danger" role="alert">'.$message.'</div>';
+                    Session::put('message', null);
+                }
+            ?>
             <div class="pull-left">
                 <form class="form-inline" action="{{URL::to('/import_ctdt')}}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}

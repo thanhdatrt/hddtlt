@@ -208,6 +208,7 @@
                             <th class="datatable-nosort">tự chọn</th>
                             <th class="datatable-nosort">tín chỉtc</th>
                             <th class="datatable-nosort">miễn trừ</th>
+                            {{-- <th class="datatable-nosort">In KHDT</th> --}}
                             <th class="datatable-nosort">ghi chú</th>
                         </tr>
                     </thead>
@@ -242,17 +243,19 @@
                                     </td>
 
                                     <td>
-                                        @if ($item -> mientru == 0)
-                                            <input value="0" id="mientru" name="status_checkbox[]" type="hidden"/>
-                                            <input value="1" id="mientru" name="status_checkbox[]" type="checkbox"/>
-                                        @else
+                                        
+                                        @if ($item -> mientru == 1 && $item -> role == 1)
                                             <input value="0" id="mientru" name="status_checkbox[]" type="hidden"/>
                                             <input value="1" id="mientru" name="status_checkbox[]" type="checkbox" checked/>
+                                        @else
+                                            <input value="0" id="mientru" name="status_checkbox[]" type="hidden"/>
+                                            <input value="1" id="mientru" name="status_checkbox[]" type="checkbox"/>
                                         @endif
                                         <input type="hidden" name="masv" value="{{$masv}}">
                                         
                                     </td>
 
+                                    
                                     <td>
                                         <input type="text" name="ghichu[]" value="{{$item -> ghichu}}"class="form-control">
                                     </td>

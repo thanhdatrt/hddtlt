@@ -7,13 +7,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\BeforeExport;
-use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\RegistersEventListeners;
+
+use App\Exports\khdtExport;
 
 
-class ExportexcelController extends Controller implements WithEvents
+class ExportexcelController extends Controller
 {
     public function AuthLogin(){
         $id = Session::get('id');
@@ -25,11 +23,15 @@ class ExportexcelController extends Controller implements WithEvents
         }
     }
 
-    use Exportable, RegistersEventListeners;
-
     public function inkhdt_excel($masv, $manganh, $mahtdt){
         $this -> AuthLogin();
         
-        
+        $filenameExport = 'khdt-'.$masv.'-'.$manganh.'.xlsx';
+        return Excel::download(new khdtExport($masv, $manganh, $mahtdt), $filenameExport);
+        // try {
+
+        // } catch (\Throwable $th) {
+        //     //throw $th;
+        // }
     }
 }

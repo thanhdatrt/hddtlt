@@ -33,7 +33,7 @@
         }
     ?>
     @foreach ($editctdt as $key => $item)
-    <form action="{{URL::to('/editctdt')}}" method="POST">
+    <form action="{{URL::to('/action_editctdt/'.$item -> mahp)}}" method="POST">
         {{ csrf_field() }}
 
         <div class="row">
@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <label class="col-sm-6 col-md-12 col-form-label">Khóa chương trình đào tạo</label>
                     <div class="col-sm-6 col-md-12">
-                        <input class="form-control" type="text" value="{{ $item -> khoactdt}}"name="khoactdt" placeholder="khóa chương trình đào tạo...">
+                        <input class="form-control" type="text" value="{{ $item -> khoactdt }}" name="khoactdt" placeholder="khóa chương trình đào tạo...">
                     </div>
                 </div>
 

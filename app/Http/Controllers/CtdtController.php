@@ -33,7 +33,7 @@ class CtdtController extends Controller
             return view('layout') -> with('pages.ctdt.viewctdt', $result_listctdt);
         } 
         else{
-            $listctdt = DB::table('ctdt') -> get();
+            $listctdt = DB::table('ctdt') -> orderBy('stt', 'asc') -> get();
             $result_listctdt = view('pages.ctdt.viewctdt') -> with('viewctdt', $listctdt);
             return view('layout') -> with('pages.ctdt.viewctdt', $result_listctdt);
         }
@@ -122,7 +122,7 @@ class CtdtController extends Controller
     public function action_editctdt(Request $request, $mahp){
         $this -> AuthLogin();
         $data = array();
-        $data['mahp'] = $request -> mahp;
+        $data['mahp'] = $mahp;
         $data['manganh'] = $request -> manganh;
         $data['mahe'] = $request -> mahe;
         $data['khoactdt'] = $request -> khoactdt;

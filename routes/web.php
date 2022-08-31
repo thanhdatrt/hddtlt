@@ -137,7 +137,7 @@ Route::post('/savectdt', [ctdtController::class, 'savectdt']);
 Route::get('/hiden_ctdt/{mahp}', [ctdtController::class, 'hiden_ctdt']);
 Route::get('/show_ctdt/{mahp}', [ctdtController::class, 'show_ctdt']);
 Route::get('/editctdt/{mahp}', [ctdtController::class, 'editctdt']);
-Route::post('/action_editctdt/{mahp}', [ctdtController::class, 'editctdt']);
+Route::post('/action_editctdt/{mahp}', [ctdtController::class, 'action_editctdt']);
 Route::post('/deletectdt/{mahp}', [ctdtController::class, 'deletectdt']);
 Route::post('/import_ctdt', [ctdtController::class, 'import_excel']);
 

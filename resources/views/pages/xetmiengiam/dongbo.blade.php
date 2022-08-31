@@ -134,6 +134,7 @@
     <div class="card-box mb-30">
         <div class="pd-20">
             <h4 class="text-blue h4">DANH SÁCH SINH VIÊN</h4>
+            <a style="margin-bottom: 20px" class="text-blue"href="{{URL::to('/dadongbo')}}">Đã đồng bộ</a>
             <?php
                 $message = Session::get('message');
                 if($message) {
@@ -142,7 +143,7 @@
                 }
             ?>
             @if (isset($sinhvien))
-                <table class="tablemonhoc data-table table stripe hover warp">
+                <table style="margin-top: 20px" class="tablemonhoc data-table table stripe hover warp">
                     <thead>
                         <tr>
                             <th>Masv</th>
