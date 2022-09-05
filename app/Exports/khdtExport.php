@@ -2,24 +2,23 @@
 
 namespace App\Exports;
 
-use Carbon\Carbon;
 use Maatwebsite\Excel\Files\LocalTemporaryFile;
 use Maatwebsite\Excel\Excel;
-use Maatwebsite\Excel\Concerns\RegistersEventListeners;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\BeforeExport;
 use Maatwebsite\Excel\Events\BeforeWriting;
-use Maatwebsite\Excel\Events\BeforeSheet;
-use Maatwebsite\Excel\Events\AfterSheet;
-use Maatwebsite\Excel\Concerns\FromView;
-use \Maatwebsite\Excel\Sheet;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+// use Maatwebsite\Excel\Events\BeforeExport;
+// use Maatwebsite\Excel\Concerns\RegistersEventListeners;
+// use Maatwebsite\Excel\Concerns\FromCollection;
+// use Maatwebsite\Excel\Concerns\Exportable;
+// use Maatwebsite\Excel\Concerns\FromQuery;
+// use Maatwebsite\Excel\Concerns\WithHeadings;
+// use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+// use Maatwebsite\Excel\Events\BeforeSheet;
+// use Maatwebsite\Excel\Events\AfterSheet;
+// use Maatwebsite\Excel\Concerns\FromView;
+// use \Maatwebsite\Excel\Sheet;
 
 class khdtExport implements WithEvents
 {

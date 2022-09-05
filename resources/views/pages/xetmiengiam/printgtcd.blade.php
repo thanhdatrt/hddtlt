@@ -80,8 +80,6 @@
         
     </table>
 
-    
-        
     <table style="border: none; width: 100%;">
         <tr>
             <td style="width: 33%;" class="text-center font-weight-bold"></td>

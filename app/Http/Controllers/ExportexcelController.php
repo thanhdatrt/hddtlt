@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Exports\khdtExport;
+use App\Exports\gtcdExport;
 
 
 class ExportexcelController extends Controller
@@ -33,5 +34,12 @@ class ExportexcelController extends Controller
         // } catch (\Throwable $th) {
         //     //throw $th;
         // }
+    }
+
+    public function ingtcd_excel($masv, $manganh, $mahtdt, $mahe, $makhoa){
+        $this -> AuthLogin();
+
+        $filenameExport = 'QĐMG-'.$masv.'-'.$manganh.'.xlsx';
+        return Excel::download(new gtcdExport($masv, $manganh, $mahtdt, $mahe, $makhoa), $filenameExport);
     }
 }
