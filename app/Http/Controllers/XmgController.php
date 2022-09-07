@@ -11,6 +11,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use PHPUnit\Framework\Constraint\Count;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Excel;
+use App\Models\XmgModel;
 
 class XmgController extends Controller
 {
@@ -58,8 +59,7 @@ class XmgController extends Controller
                 -> where('makhoa', $makhoa) 
                 -> where('mahe', $mahe) 
                 -> where('manganh', $manganh) 
-                -> where('khoactdt', $khoactdt)
-                -> where('role', 0) -> get();
+                -> where('khoactdt', $khoactdt) -> get();
 
                 $ctdt = DB::table('ctdt') -> where('mahe', $mahe) 
                 -> where('manganh', $manganh) 
@@ -141,7 +141,7 @@ class XmgController extends Controller
                 $data['mientru'] = 0;
                 $data['inkhdt'] = 0;
                 $data['status'] = 1;
-                $data['role'] = 0;
+                $data['checked'] = 0;
                 $data['create_at'] = new dateTime('now');
     
                 DB::table('sinhvien_ctdt') -> insert($data);
@@ -338,24 +338,6 @@ class XmgController extends Controller
         }
     }
 
-    public function save_miengiam(Request $request, $mahp, $masv){
-        $this -> AuthLogin();
-
-        $data = array();
-        if(substr($request -> $mahp, 0, 7) == 'mientru'){
-            $data['mientru'] = 1;
-            $data['inkhdt'] = 0;
-        } else {
-            $data['mientru'] = 0;
-            $data['inkhdt'] = 1;
-        }
-
-        $data['ghichu'] = $request -> ghichu;
-
-        DB::table('sinhvien_ctdt') -> where('mahp', $mahp) -> where('masv', $masv) -> update($data);
-        return back();
-    }
-
     public function inkhdt($masv, $manganh, $mahtdt){
         $this -> AuthLogin();
 
@@ -429,114 +411,140 @@ class XmgController extends Controller
         $mahp           = $request -> mahp;
         $tuchon         = $request -> tuchon;
         $tinchi         = $request -> tinchi;
-        $tinchitc     = $request -> sotinchitc;
+        $tinchitc       = $request -> sotinchitc;
         $masv           = $request -> masv;
         
-        // xoa phan tu thua trong mang
-        for ($i=0; $i < count($checkbox); $i++) { 
-            if($checkbox[$i] == 1){
+        $i = 0;
+        foreach($checkbox as $item){
+            if($item == 1){
                 unset($checkbox[$i - 1]);
-            } 
+            }
+            $i++;
         }
+
         // get value of checkbox 
         $mientru = array_values($checkbox);
 
         $result_tuchon = null;
         $result_tctuchon = null;
         $result_tinchi = null;
+
         for($i=0; $i < count($mahp); $i++) {
             if($tuchon[$i] == null){
+                $data = array();
                 // cập nhật dũ giá trị môn không tự chọn
-                if($mientru[$i] == 1){
-                    $data = [
-                        'mientru'     => 1,
-                        'inkhdt'      => 0,
-                    ];
+                if($result_tuchon != null){
+                    if($result_tinchi < $result_tctuchon){
+                        $minus = $result_tctuchon - $result_tinchi;
+                        $ghichu = 'Chọn '.$minus.' tc';
+                        $data['ghichu'] = $ghichu;
+                        $data['mientru'] = 0;
+                        $data['inkhdt'] = 1;
+
+                        DB::table('sinhvien_ctdt') 
+                        -> where('tuchon', $result_tuchon)  
+                        -> update($data);
+
+                    } else if($result_tinchi == $result_tctuchon){
+                        $data['mientru'] = 1;
+                        $data['inkhdt'] = 0;
+                        $data['ghichu'] = '';
+
+                        DB::table('sinhvien_ctdt') 
+                        -> where('tuchon', $result_tuchon) 
+                        -> update($data);
+                    }
+                    $result_tuchon = null;
+                    $result_tctuchon = null;
+                    $result_tinchi = null;
+
                 } else {
-                    $data = [
-                        'mientru'     => 0,
-                        'inkhdt'      => 1,
-                    ];
+                    if($mientru[$i] == 1){
+                        $data = [
+                            'mientru'       => 1,
+                            'inkhdt'        => 0,
+                            'checked'       => 1,
+                        ];
+                    } else {
+                        $data = [
+                            'mientru'     => 0,
+                            'inkhdt'      => 1,
+                            'checked'       => 0,
+                        ];
+                    }
+                    DB::table('sinhvien_ctdt') -> where('masv', $masv) -> where('mahp', $mahp[$i]) -> update($data);
                 }
-                DB::table('sinhvien_ctdt') -> where('masv', $masv) -> where('mahp', $mahp[$i]) -> update($data);
             } else {
                 // gia tri tu chon
                 if($result_tuchon == null){
                     $result_tuchon = $tuchon[$i];
                     $result_tctuchon = $tinchitc[$i];
-
+                    $data = null;
                     if($mientru[$i] == 1){
                         $result_tinchi = $tinchi[$i];  
                         $data = [
-                            'mientru'     => 1,
-                            'inkhdt'      => 0,
-                            'role'        => 1,
+                            'checked'       => 1,
                         ];
                     } else {
                         $data = [
-                            'mientru'       => 1,
-                            'inkhdt'        => 0,
-                            'role'          => 0,
+                            'checked'       => 0,
                         ];
                     }
                     DB::table('sinhvien_ctdt') -> where('masv', $masv) -> where('mahp', $mahp[$i]) -> update($data);
 
                 } else if($result_tuchon == $tuchon[$i]){
+                    $data = null;
                     if($mientru[$i] == 1){
                         $result_tinchi += $tinchi[$i];  
                         $data = [
-                            'mientru'     => 1,
-                            'inkhdt'      => 0,
-                            'role'        => 1,
+                            'checked'     => 1,
                         ];
                     } else {
                         $data = [
-                            'mientru'       => 1,
-                            'role'          => 0,
-                            'inkhdt'        => 0,
+                            'checked'       => 0,
                         ];
                     }
                     DB::table('sinhvien_ctdt') -> where('masv', $masv) -> where('mahp', $mahp[$i]) -> update($data);
                 } else {
-                    $dsghichu = array();
+                    $data = null;
                     if($result_tinchi < $result_tctuchon){
                         $minus = $result_tctuchon - $result_tinchi;
                         $ghichu = 'Chọn '.$minus.' tc';
-                        $dsghichu['ghichu'] = $ghichu;
+                        $data['ghichu'] = $ghichu;
+                        $data['mientru'] = 0;
+                        $data['inkhdt'] = 1;
+
                         DB::table('sinhvien_ctdt') 
                         -> where('tuchon', $result_tuchon) 
                         -> where('inkhdt', 0)
-                        -> update($dsghichu);
-
+                        -> update($data);
 
                     } else if($result_tinchi == $result_tctuchon){
-                        $data = null;
                         $data['mientru'] = 1;
                         $data['inkhdt'] = 0;
                         $data['ghichu'] = '';
-                        // $data['role'] =1;
 
                         DB::table('sinhvien_ctdt') 
                         -> where('tuchon', $result_tuchon) 
                         -> update($data);
                     }
 
+
+                    // nhom moi
                     $result_tuchon = null;
                     $result_tctuchon = null;
-                    $result_tinchi = null;
-                    // nhom moi
+                    $result_tinchi = 0;
+                    $data = null;
                     $result_tuchon = $tuchon[$i];
                     $result_tctuchon = $tinchitc[$i];
                     if($mientru[$i] == 1){
                         $result_tinchi = $tinchi[$i];  
                         $data = [
-                            'mientru'     => 1,
-                            'inkhdt'      => 0,
+                            'checked'       => 1,
                         ];
                     } else {
                         $data = [
-                            'mientru'     => 1,
-                            'inkhdt'      => 0,
+                            'checked'       => 0,
                         ];
                     }
                     DB::table('sinhvien_ctdt') -> where('masv', $masv) -> where('mahp', $mahp[$i]) -> update($data);
@@ -546,4 +554,9 @@ class XmgController extends Controller
         
         return back();
     }
+
+    public function dadongbo(){
+        return view('xetmiengiam.dadongbo');
+    }
+
 }

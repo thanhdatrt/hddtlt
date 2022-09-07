@@ -40,6 +40,7 @@ Route::get('/logout', [homeController::class, 'logout']);
 Route::get('/dongbo', [xmgController::class, 'dongbo']);
 Route::get('/xetmientruhp', [xmgController::class, 'xetmientruhp']);
 Route::get('/filterdata', [xmgController::class, 'filterdata']);
+Route::get('/dadongbo', [xmgController::class, 'dadongbo']);
 
 Route::post('/capnhat', [xmgController::class, 'capnhat']);
 

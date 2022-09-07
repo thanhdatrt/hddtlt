@@ -156,7 +156,7 @@ class gtcdExport implements WithEvents
 
 
         $sheet->getStyle('A11:I'.$row)->getFont()->setName('Times New Roman');
-        $sheet -> getStyle('A13:I'.$row) -> applyFromArray([
+        $sheet -> getStyle('A11:I'.$row) -> applyFromArray([
             'font' => [
                 'size' => 12,
             ]

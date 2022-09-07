@@ -244,13 +244,14 @@
 
                                     <td>
                                         
-                                        @if ($item -> mientru == 1 && $item -> role == 1)
-                                            <input value="0" id="mientru" name="status_checkbox[]" type="hidden"/>
-                                            <input value="1" id="mientru" name="status_checkbox[]" type="checkbox" checked/>
-                                        @else
+                                        @if ($item -> checked == 0)
                                             <input value="0" id="mientru" name="status_checkbox[]" type="hidden"/>
                                             <input value="1" id="mientru" name="status_checkbox[]" type="checkbox"/>
+                                        @else
+                                            <input value="0" id="mientru" name="status_checkbox[]" type="hidden"/>
+                                            <input value="1" id="mientru" name="status_checkbox[]" type="checkbox" checked/>
                                         @endif
+
                                         <input type="hidden" name="masv" value="{{$masv}}">
                                         
                                     </td>

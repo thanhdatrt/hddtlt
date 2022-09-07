@@ -51,11 +51,12 @@ class khdtExport implements WithEvents
 
     private function populateSheet($sheet){
         $sinhvien = DB::table('sinhvien') -> where('masv', $this -> masv) -> get();
-        $sv_ctdt = DB::table('sinhvien_ctdt') 
-        -> where('masv', $this -> masv) 
-        -> where('inkhdt', 1) -> orwhere('role', 0) -> where('masv', $this -> masv) -> get();
         $nganh = DB::table('nganh') -> where('manganh', $this -> manganh) -> get();
         $htdt = DB::table('htdt') -> where('mahtdt', $this -> mahtdt) -> get();
+
+        $sv_ctdt = DB::table('sinhvien_ctdt') 
+        -> where('masv', $this -> masv) 
+        -> where('inkhdt', 1) -> get();
 
         foreach($nganh as $item){
             $tennganh = $item -> tennganh;
@@ -229,7 +230,7 @@ class khdtExport implements WithEvents
         $row++;
         $sheet->getStyle('A'.$row)->applyFromArray(['alignment' => ['horizontal' => 'center']]);
         $sheet->getStyle('A'.$row)->applyFromArray(['alignment' => ['vertical' => 'top']]);
-        $sheet->setCellValue('A'.$row, '1.');
+        $sheet->setCellValue('A'.$row, '2.');
         $C = 'C'.$row;
         $I = 'I'.$row;
         // gop cot

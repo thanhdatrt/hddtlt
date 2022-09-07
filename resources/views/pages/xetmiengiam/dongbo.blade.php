@@ -145,7 +145,7 @@
             @if (isset($sinhvien))
                 <table style="margin-top: 20px" class="tablemonhoc data-table table stripe hover warp">
                     <thead>
-                        <tr>
+                        <tr>  
                             <th>Masv</th>
                             <th class="datatable-nosort">Mahs</th>
                             <th class="datatable-nosort">Họ tên</th>
