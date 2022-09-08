@@ -29,12 +29,15 @@ class MonhocController extends Controller
 
         if(isset($_GET['keyword'])){
             $keyword = $_GET['keyword'];
-            $listsearch = DB::table('monhoc') -> where('tenhp', 'LIKE', '%'.$keyword.'%') ->orWhere('mahp', 'LIKE', '%'.$keyword.'%') -> paginate(15);
+            $listsearch = DB::table('monhoc') 
+            -> where('tenhp', 'LIKE', '%'.$keyword.'%') 
+            -> orWhere('mahp', 'LIKE', '%'.$keyword.'%')
+            -> orderBy('mahp', 'asc') -> paginate(15);
             $listsearch -> appends($request -> all());
             return view('pages.monhoc.viewmonhoc') -> with('viewmonhoc', $listsearch);;
         } 
         else{
-            $listmonhoc = DB::table('monhoc') -> simplePaginate(15);
+            $listmonhoc = DB::table('monhoc') -> orderBy('mahp', 'asc') -> simplePaginate(15);
             $listmonhoc -> appends($request -> all());
             return view('pages.monhoc.viewmonhoc') -> with('viewmonhoc', $listmonhoc);
         }
@@ -154,9 +157,14 @@ class MonhocController extends Controller
     // import excel
     public function import_excel(Request $request){
         $this -> AuthLogin();
-        
-        Excel::import(new ExcelImport, $request -> file('filemonhoc') -> store('files'));
-        return redirect() -> back();
+        try {
+            Excel::import(new ExcelImport(2), $request -> file('filemonhoc') -> store('files'));
+            Session::put('message', 'Nhập dữ liệu thành công');
+            return back();
+        } catch (\Throwable $th) {
+            Session::put('message', 'Lỗi: '.$th);
+            return back();
+        }
     }
 
 }

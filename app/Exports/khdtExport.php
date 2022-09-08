@@ -56,7 +56,7 @@ class khdtExport implements WithEvents
 
         $sv_ctdt = DB::table('sinhvien_ctdt') 
         -> where('masv', $this -> masv) 
-        -> where('inkhdt', 1) -> get();
+        -> where('inkhdt', 1) -> orderBy('stt', 'asc') -> get();
 
         foreach($nganh as $item){
             $tennganh = $item -> tennganh;

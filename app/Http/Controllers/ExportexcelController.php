@@ -29,17 +29,12 @@ class ExportexcelController extends Controller
         
         $filenameExport = 'khdt-'.$masv.'-'.$manganh.'.xlsx';
         return Excel::download(new khdtExport($masv, $manganh, $mahtdt), $filenameExport);
-        // try {
-
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
     }
 
-    public function ingtcd_excel($masv, $manganh, $mahtdt, $mahe, $makhoa){
+    public function ingtcd_excel($masv, $manganh, $mahtdt, $mahe, $makhoa, $khoactdt){
         $this -> AuthLogin();
 
-        $filenameExport = 'QĐMG-'.$masv.'-'.$manganh.'.xlsx';
-        return Excel::download(new gtcdExport($masv, $manganh, $mahtdt, $mahe, $makhoa), $filenameExport);
+        $filenameExport = 'QĐMG-'.$manganh.'.xlsx';
+        return Excel::download(new gtcdExport($masv, $manganh, $mahtdt, $mahe, $makhoa, $khoactdt), $filenameExport);
     }
 }

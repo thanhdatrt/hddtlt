@@ -159,7 +159,13 @@ class CtdtController extends Controller
     // import excel
     public function import_excel(Request $request){
         $this -> AuthLogin();
-        Excel::import(new ExcelImportCtdt(2), $request -> file('filectdt') -> store('files'));
-        return redirect() -> back();
+        try {
+            Excel::import(new ExcelImportCtdt(2), $request -> file('filectdt') -> store('files'));
+            Session::put('message', 'Nhập dữ liệu thành công');
+            return back();
+        } catch (\Throwable $th) {
+            Session::put('message', 'Lỗi: '.$th);
+            return back();
+        }
     }
 }

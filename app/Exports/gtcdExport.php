@@ -19,12 +19,14 @@ class gtcdExport implements WithEvents
     public $mahe; 
     public $makhoa;
 
-    public function __construct($masv, $manganh, $mahtdt, $mahe, $makhoa){
+    public function __construct($masv, $manganh, $mahtdt, $mahe, $makhoa, $khoactdt){
         $this -> masv = $masv;
         $this -> manganh = $manganh;
         $this -> mahtdt = $mahtdt;
         $this -> mahe = $mahe;
         $this -> mahtdt = $mahtdt;
+        $this -> makhoa = $makhoa;
+        $this -> khoactdt = $khoactdt;
     }
 
     public function registerEvents():array
@@ -45,12 +47,18 @@ class gtcdExport implements WithEvents
     }
 
     private function populateSheet($sheet){
-        $ctdt_sinhvien = DB::table('sinhvien_ctdt') -> where('masv', $this->masv) -> where('mientru', 1) -> get();
-        $sinhvien = DB::table('sinhvien') -> where('masv', $this->masv) -> get();
         $nganh = DB::table('nganh') -> where('manganh', $this->manganh) -> get();
         $htdt = DB::table('htdt') -> where('mahtdt', $this->mahtdt) -> get();
         $he = DB::table('he') -> where('mahe', $this->mahe) -> get();
-        $khoa = DB::table('khoahoc') -> where('makhoa', $this->makhoa) -> get();
+
+        $sv_ctdt = DB::table('sinhvien_ctdt') -> join('sinhvien', 'sinhvien.masv', '=', 'sinhvien_ctdt.masv')
+        -> where('sinhvien_ctdt.manganh', $this -> manganh)
+        -> where('sinhvien_ctdt.khoactdt', $this ->khoactdt)
+        -> where('sinhvien_ctdt.mahe', $this -> mahe)
+        -> where('sinhvien_ctdt.makhoa', $this -> makhoa)
+        -> where('mientru', 1) -> where('checked', 1) 
+        -> orderBy('sinhvien_ctdt.mahs', 'asc')
+        -> orderBy('sinhvien_ctdt.stt', 'asc') -> get();
 
         foreach($nganh as $item){
             $tennganh = $item -> tennganh;
@@ -61,23 +69,18 @@ class gtcdExport implements WithEvents
         foreach($he as $item){
             $tenhe      = $item -> he;
         }
-        foreach($khoa as $item){
-            $tenkhoa    = $item -> tenkhoa;
-        }
-        foreach($sinhvien as $item){
-            $hoten      = $item -> hoten;
-            $ngaysinh   = $item -> ngaysinh;
-            $mahs       = $item -> mahs;
-        }
 
+
+        $temp = Str::lower($tenhtdt);
+        $temp1 = Str::ucfirst($temp);
         $sheet->setCellValue('C5', $tennganh);
-        $bac = $tenhtdt.' '.$tenhe;
+        $bac = $temp1.' '.$tenhe;
         $sheet->setCellValue('C6', $bac);
         
 
         $row = 11;
         $stt = 1;
-        foreach($ctdt_sinhvien as $item){
+        foreach($sv_ctdt as $item){
             // Create cell definitions
             $A = "A".($row);
             $B = "B".($row);
@@ -89,7 +92,7 @@ class gtcdExport implements WithEvents
             $H = "H".($row);
             $I = "I".($row);
 
-            $fullname = $hoten;
+            $fullname = $item -> hoten;
             $arrName = explode(" ", $fullname);
 
             $firstName = array_shift($arrName); // họ
@@ -99,10 +102,10 @@ class gtcdExport implements WithEvents
             // Populate dynamic content
             $sheet->getStyle('A'.$row)->applyFromArray(['alignment' => ['horizontal' => 'center']]);
             $sheet->setCellValue($A, $stt);
-            $sheet->setCellValue($B, $mahs);
+            $sheet->setCellValue($B, $item -> mahs);
             $sheet->setCellValue($C, $firstName.' '.$middleName);
             $sheet->setCellValue($D, $lastName);
-            $sheet->setCellValue($E, $ngaysinh);
+            $sheet->setCellValue($E, $item -> ngaysinh);
             $sheet->setCellValue($F, $item->masv);
             $sheet->setCellValue($G, $item->tenhp);
             $sheet->setCellValue($H, $item->tinchi);

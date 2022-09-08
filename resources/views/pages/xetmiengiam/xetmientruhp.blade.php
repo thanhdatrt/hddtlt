@@ -185,7 +185,7 @@
                         <fieldset>
                             <legend class="legend1">EXCEL</legend>
                             <a href="{{URL::to('/inkhdt-excel/'.$masv.'/'.$manganh.'/'.$mahtdt)}}" class="btn btn-info"><i class="fa-solid fa-print"></i> In KHĐT</a>
-                            <a href="{{URL::to('/ingtcd-excel/'.$masv.'/'.$manganh.'/'.$mahtdt.'/'.$mahe.'/'.$makhoa)}}" class="btn btn-info"><i class="fa-solid fa-print"></i> In GTCĐ</a>
+                            <a href="{{URL::to('/ingtcd-excel/'.$masv.'/'.$manganh.'/'.$mahtdt.'/'.$mahe.'/'.$makhoa.'/'.$khoactdt)}}" class="btn btn-info"><i class="fa-solid fa-print"></i> In GTCĐ</a>
                         </fieldset>
                     </div>
                         

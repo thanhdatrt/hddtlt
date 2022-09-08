@@ -41,6 +41,7 @@ Route::get('/dongbo', [xmgController::class, 'dongbo']);
 Route::get('/xetmientruhp', [xmgController::class, 'xetmientruhp']);
 Route::get('/filterdata', [xmgController::class, 'filterdata']);
 Route::get('/dadongbo', [xmgController::class, 'dadongbo']);
+Route::get('/huydongbo/{masv}/{manganh}', [xmgController::class, 'huydongbo']);
 
 Route::post('/capnhat', [xmgController::class, 'capnhat']);
 
@@ -50,7 +51,7 @@ Route::get('/ingtcd/{masv}/{manganh}/{mahtdt}/{mahe}/{makhoa}', [xmgController::
 
 // xuat file excel
 Route::get('/inkhdt-excel/{masv}/{manganh}/{mahtdt}', [exportexcelController::class, 'inkhdt_excel']);
-Route::get('/ingtcd-excel/{masv}/{manganh}/{mahtdt}/{mahe}/{makhoa}', [exportexcelController::class, 'ingtcd_excel']);
+Route::get('/ingtcd-excel/{masv}/{manganh}/{mahtdt}/{mahe}/{makhoa}/{khoactdt}', [exportexcelController::class, 'ingtcd_excel']);
 
 Route::get('/savesinhvien-ctdt/{masv}/{manganh}/{mahe}/{khoactdt}', [xmgController::class, 'savesinhvien_ctdt']);
 Route::post('/save_miengiam/{mahp}/{masv}', [xmgController::class, 'save_miengiam']);
@@ -61,9 +62,7 @@ Route::get('/profile', [userController::class, 'profile']);
 Route::get('/accountmanager', [userController::class, 'AccountManager']);
 Route::post('/capnhattt', [userController::class, 'capnhattt']);
 Route::post('/doimatkhau', [userController::class, 'doimatkhau']);
-
 Route::get('/show_user/{id}', [userController::class, 'show_user']);
-
 Route::get('/hidden_user/{id}', [userController::class, 'hidden_user']);
 Route::post('/deleteuser/{id}', [userController::class, 'deleteuser']);
 Route::post('/adduser', [userController::class, 'addUser']);

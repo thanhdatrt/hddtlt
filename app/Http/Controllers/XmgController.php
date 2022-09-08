@@ -445,7 +445,7 @@ class XmgController extends Controller
                         -> where('tuchon', $result_tuchon)  
                         -> update($data);
 
-                    } else if($result_tinchi == $result_tctuchon){
+                    } else if($result_tinchi >= $result_tctuchon){
                         $data['mientru'] = 1;
                         $data['inkhdt'] = 0;
                         $data['ghichu'] = '';
@@ -519,7 +519,7 @@ class XmgController extends Controller
                         -> where('inkhdt', 0)
                         -> update($data);
 
-                    } else if($result_tinchi == $result_tctuchon){
+                    } else if($result_tinchi >= $result_tctuchon){
                         $data['mientru'] = 1;
                         $data['inkhdt'] = 0;
                         $data['ghichu'] = '';
@@ -556,7 +556,25 @@ class XmgController extends Controller
     }
 
     public function dadongbo(){
-        return view('xetmiengiam.dadongbo');
+        $this -> AuthLogin();
+
+        $sinhvien = DB::table('sinhvien') -> where('role', 1) -> get();
+        return view('pages.xetmiengiam.dadongbo') -> with('sinhvien', $sinhvien);
     }
 
+    public function huydongbo($masv, $manganh){
+        $this -> AuthLogin();
+
+        $data = array();
+        $data['role'] = 0;
+        try {
+            DB::table('sinhvien') -> where('masv', $masv) -> where('manganh', $manganh) -> update($data);
+            DB::table('sinhvien_ctdt') -> where('masv', $masv) -> where('manganh', $manganh) -> delete();
+            Session::put('message', 'Đã hủy đồng bộ mã sinh viên '.$masv.'!!!');
+        } catch (\Throwable $th) {
+            Session::put('message', 'Lỗi: '.$th.'!!!');
+            
+        }
+        return back();
+    }
 }
