@@ -7,21 +7,21 @@
     <title>Login</title>
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="public/src/images/logo1.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="public/src/images/logo1.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="src/images/logo1.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="src/images/logo1.png">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="public/login/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="login/fonts/icomoon/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="public/login/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="login/css/owl.carousel.min.css">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="public/login/css/bootstrap.min.css">
+    <link rel="stylesheet" href="login/css/bootstrap.min.css">
     
     <!-- Style -->
-    <link rel="stylesheet" href="public/login/css/style.css">
+    <link rel="stylesheet" href="login/css/style.css">
 
     
   </head>
@@ -33,7 +33,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <img src="public/src/images/logo1.png" alt="Image" class="img-fluid">
+          <img src="src/images/logo1.png" alt="Image" class="img-fluid">
         </div>
         <div class="col-md-6 contents">
           <div class="row justify-content-center">
@@ -88,9 +88,9 @@
   </div>
 
   
-    <script src="public/login/js/jquery-3.3.1.min.js"></script>
-    <script src="public/login/js/popper.min.js"></script>
-    <script src="public/login/js/bootstrap.min.js"></script>
-    <script src="public/login/js/main.js"></script>
+    <script src="login/js/jquery-3.3.1.min.js"></script>
+    <script src="login/js/popper.min.js"></script>
+    <script src="login/js/bootstrap.min.js"></script>
+    <script src="login/js/main.js"></script>
   </body>
 </html>

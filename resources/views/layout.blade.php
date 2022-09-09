@@ -6,34 +6,34 @@
     
     <!-- Site favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="{{asset('public/src/images/logo1.png')}}">
-	<link rel="icon" type="image/png" sizes="16x16" href="{{asset('public/src/images/logo1.png')}}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{asset('src/images/logo1.png')}}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{asset('src/images/logo1.png')}}">
 
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-	<link href="{{asset('public/vendors/styles/font-face.css')}}" rel="stylesheet" media="all">
-	<link href="{{asset('public/vendors/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
+	<link href="{{asset('vendors/styles/font-face.css')}}" rel="stylesheet" media="all">
+	<link href="{{asset('vendors/mdi-font/css/material-design-iconic-font.min.css')}}" rel="stylesheet" media="all">
 	<!-- Google Font -->
 	<link href="{{asset('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap')}}" rel="stylesheet">
 	<!-- Material Icons -->
     <link href="{{asset('https://fonts.googleapis.com/icon?family=Material+Icons+Round')}}" rel="stylesheet">
 	<!-- CSS -->
-    <link rel="stylesheet" href="{{asset('public/vendors/styles/core.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('public/vendors/styles/icon-font.min.css')}}">
+    <link rel="stylesheet" href="{{asset('vendors/styles/core.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('vendors/styles/icon-font.min.css')}}">
 	<link rel="stylesheet" href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css')}}" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" type="text/css" href="{{asset('public/src/plugins/datatables/css/dataTables.bootstrap4.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('public/src/plugins/datatables/css/responsive.bootstrap4.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('public/vendors/styles/style.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('src/plugins/datatables/css/dataTables.bootstrap4.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('src/plugins/datatables/css/responsive.bootstrap4.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('vendors/styles/style.css')}}">
 	<!-- switchery css -->
-	<link rel="stylesheet" type="text/css" href="{{asset('public/src/plugins/switchery/switchery.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('src/plugins/switchery/switchery.min.css')}}">
 	<!-- bootstrap-tagsinput css -->
-	<link rel="stylesheet" type="text/css" href="{{asset('public/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}">
 	<!-- bootstrap-touchspin css -->
-	<link rel="stylesheet" type="text/css" href="{{asset('public/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css')}}">
 	{{-- calendor --}}
-	<link href="{{asset('public/vendors/styles/style.css')}}" rel="stylesheet" type="text/css"media="all">	
-	<link rel="stylesheet" type="text/css" href="{{asset('public/src/plugins/fullcalendar/fullcalendar.css')}}">
+	<link href="{{asset('vendors/styles/style.css')}}" rel="stylesheet" type="text/css"media="all">	
+	<link rel="stylesheet" type="text/css" href="{{asset('src/plugins/fullcalendar/fullcalendar.css')}}">
 	<link href="{{asset('https://fonts.googleapis.com/icon?family=Material+Icons')}}" rel="stylesheet">
 
 	{{-- <link rel="stylesheet" type="text/css" href="{{asset('//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css')}}"> --}}
@@ -95,7 +95,7 @@
 
 	<div class="pre-loader">
 		<div class="pre-loader-box">
-			<div class="loader-logo"><img src="{{asset('public/src/images/logo1.png')}}" alt=""></div>
+			<div class="loader-logo"><img src="{{asset('src/images/logo1.png')}}" alt=""></div>
 			<div class='loader-progress' id="progress_div">
 				<div class='bar' id='bar1'></div>
 			</div>
@@ -264,8 +264,8 @@
 		<div class="left-side-bar">
 			<div class="brand-logo">
 				<a href="{{URL::to('/home')}}">
-					<img src="{{asset('public/src/images/logo.png')}}" width="50px" height="50px" alt="" class="dark-logo">
-					<img src="{{asset('public/src/images/logo.png')}}" width="50px" height="50px" alt="" class="light-logo">
+					<img src="{{asset('src/images/logo.png')}}" width="50px" height="50px" alt="" class="dark-logo">
+					<img src="{{asset('src/images/logo.png')}}" width="50px" height="50px" alt="" class="light-logo">
 				</a>
 				<div class="close-sidebar" data-toggle="left-sidebar-close">
 					<i class="ion-close-round"></i>
@@ -390,28 +390,28 @@
     
 
 	<!-- js -->
-	<script src="{{asset('public/vendors/scripts/core.js')}}"></script>
-	<script src="{{asset('public/vendors/scripts/script.min.js')}}"></script>
-	<script src="{{asset('public/vendors/scripts/process.js')}}"></script>
-	<script src="{{asset('public/vendors/scripts/layout-settings.js')}}"></script>
-	<script src="{{asset('public/src/plugins/apexcharts/apexcharts.min.js')}}"></script>
+	<script src="{{asset('vendors/scripts/core.js')}}"></script>
+	<script src="{{asset('vendors/scripts/script.min.js')}}"></script>
+	<script src="{{asset('vendors/scripts/process.js')}}"></script>
+	<script src="{{asset('vendors/scripts/layout-settings.js')}}"></script>
+	<script src="{{asset('src/plugins/apexcharts/apexcharts.min.js')}}"></script>
 	
-	{{-- <script src="{{asset('public/src/plugins/datatables/js/jquery.dataTables.min.js')}}"></script> --}}
-	<script src="{{asset('public/src/plugins/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
-	<script src="{{asset('public/src/plugins/datatables/js/dataTables.responsive.min.js')}}"></script>
-	<script src="{{asset('public/src/plugins/datatables/js/responsive.bootstrap4.min.js')}}"></script>
-	<script src="{{asset('public/vendors/scripts/dashboard.js')}}"></script>
-	<script src="{{asset('public/src/plugins/fullcalendar/fullcalendar.min.js')}}"></script>
-	<script src="{{asset('public/vendors/scripts/calendar-setting.js')}}"></script>
+	{{-- <script src="{{asset('src/plugins/datatables/js/jquery.dataTables.min.js')}}"></script> --}}
+	<script src="{{asset('src/plugins/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+	<script src="{{asset('src/plugins/datatables/js/dataTables.responsive.min.js')}}"></script>
+	<script src="{{asset('src/plugins/datatables/js/responsive.bootstrap4.min.js')}}"></script>
+	<script src="{{asset('vendors/scripts/dashboard.js')}}"></script>
+	<script src="{{asset('src/plugins/fullcalendar/fullcalendar.min.js')}}"></script>
+	<script src="{{asset('vendors/scripts/calendar-setting.js')}}"></script>
 	<!-- switchery js -->
-	<script src="{{asset('public/src/plugins/switchery/switchery.min.js')}}"></script>
+	<script src="{{asset('src/plugins/switchery/switchery.min.js')}}"></script>
 	<!-- bootstrap-tagsinput js -->
-	<script src="{{asset('public/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')}}"></script>
+	<script src="{{asset('src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')}}"></script>
 	<!-- bootstrap-touchspin js -->
-	<script src="{{asset('public/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js')}}"></script>
-	<script src="{{asset('public/vendors/scripts/advanced-components.js')}}"></script>
-	<script src="{{asset('public/src/plugins/jQuery-Knob-master/jquery.knob.min.js')}}"></script>
-	<script src="{{asset('public/vendors/scripts/knob-chart-setting.js')}}"></script>
+	<script src="{{asset('src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js')}}"></script>
+	<script src="{{asset('vendors/scripts/advanced-components.js')}}"></script>
+	<script src="{{asset('src/plugins/jQuery-Knob-master/jquery.knob.min.js')}}"></script>
+	<script src="{{asset('vendors/scripts/knob-chart-setting.js')}}"></script>
 	<script>
 		var btn = $('#button');
 
