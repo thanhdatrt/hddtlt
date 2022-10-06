@@ -55,8 +55,8 @@ class khdtExport implements WithEvents
         $htdt = DB::table('htdt') -> where('mahtdt', $this -> mahtdt) -> get();
 
         $sv_ctdt = DB::table('sinhvien_ctdt') 
-        -> where('masv', $this -> masv) 
-        -> where('inkhdt', 1) -> orderBy('stt', 'asc') -> get();
+            -> where('masv', $this -> masv) 
+            -> where('inkhdt', 1) -> orderBy('stt', 'asc') -> get();
 
         foreach($nganh as $item){
             $tennganh = $item -> tennganh;
@@ -115,6 +115,7 @@ class khdtExport implements WithEvents
             $AJ = "AJ".($row);
             $AK = "AK".($row);
             $AL = "AL".($row);
+            // $AM = "AM".($row);
 
             // Populate dynamic content
             $sheet->setCellValue($A, $stt);
@@ -131,6 +132,8 @@ class khdtExport implements WithEvents
             $sheet->setCellValue($AJ, $item->mientru);
             $sheet->setCellValue($AK, $item->inkhdt);
             $sheet->setCellValue($AL, $item->ghichu);
+            $sheet->setCellValue($AL, $item->ghichu);
+            // $sheet->setCellValue($AM, $item->checked);
 
             $row++;
             $stt++;

@@ -55,6 +55,7 @@ Route::get('/ingtcd-excel/{masv}/{manganh}/{mahtdt}/{mahe}/{makhoa}/{khoactdt}',
 
 Route::get('/savesinhvien-ctdt/{masv}/{manganh}/{mahe}/{khoactdt}', [xmgController::class, 'savesinhvien_ctdt']);
 Route::post('/save_miengiam/{mahp}/{masv}', [xmgController::class, 'save_miengiam']);
+Route::post('/ingtcd', [xmgController::class, 'ingtcd']);
 
 
 // user

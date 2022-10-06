@@ -443,6 +443,8 @@ class XmgController extends Controller
 
                         DB::table('sinhvien_ctdt') 
                         -> where('tuchon', $result_tuchon)  
+                        -> where('inkhdt', 0)
+                        -> where('checked', 0) 
                         -> update($data);
 
                     } else if($result_tinchi >= $result_tctuchon){
@@ -484,6 +486,8 @@ class XmgController extends Controller
                         $result_tinchi = $tinchi[$i];  
                         $data = [
                             'checked'       => 1,
+                            'mientru'       => 1,
+                            'inkhdt'        => 0,
                         ];
                     } else {
                         $data = [
@@ -498,6 +502,8 @@ class XmgController extends Controller
                         $result_tinchi += $tinchi[$i];  
                         $data = [
                             'checked'     => 1,
+                            'mientru'       => 1,
+                            'inkhdt'        => 0,
                         ];
                     } else {
                         $data = [
@@ -517,6 +523,7 @@ class XmgController extends Controller
                         DB::table('sinhvien_ctdt') 
                         -> where('tuchon', $result_tuchon) 
                         -> where('inkhdt', 0)
+                        -> where('checked', 0) 
                         -> update($data);
 
                     } else if($result_tinchi >= $result_tctuchon){
@@ -577,4 +584,7 @@ class XmgController extends Controller
         }
         return back();
     }
+
+    
+
 }

@@ -287,6 +287,7 @@
 							<ul class="submenu">
 								<li><a href="{{URL::to('/dongbo')}}">Đồng bộ dữ liệu</a></li>
 								<li><a href="{{URL::to('/xetmientruhp')}}">Xét miễn trừ cho sinh viên</a></li>
+								<li><a href="{{URL::to('/ingtcd')}}">In Ds miễn giảm</a></li>
 								
 							</ul>
 						</li>
